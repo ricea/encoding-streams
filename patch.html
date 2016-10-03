@@ -1,0 +1,221 @@
+<!DOCTYPE html><html lang="en-US"><meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1,shrink-to-fit=no" name="viewport">
+<meta content="#3c790a" name="theme-color">
+<title>Changes to the Encoding Standard to support the Stream Standard</title>
+<link href="https://resources.whatwg.org/standard.css" rel="stylesheet">
+<link href="https://resources.whatwg.org/logo-encoding.svg" rel="icon">
+<script defer id="head" src="https://html.spec.whatwg.org/dfn.js"></script>
+<style>
+.addition {
+  font-weight: bold;
+  color: #00bb00;
+  margin-left: -0.5em;
+}
+</style>
+
+<h1>Changes to the <a href="https://encoding.spec.whatwg.org">Encoding
+Standard</a> to support the <a href="https://streams.spec.whatwg.org/">Stream
+Standard</a></h1>
+
+<h3>In 8.1, Interface <code title="">TextDecoder</code>:</h3>
+
+<p class="addition">In the IDL, add
+
+<p><pre class="idl">
+ static TransformStream <a href="#dom-textdecoder-stream" title="dom-TextDecoder-stream">stream</a>(optional DOMString <var>label</var> = "utf-8", optional <a href="https://encoding.spec.whatwg.org/#textdecoderoptions">TextDecoderOptions</a> <var>options</var>);
+</pre>
+
+<p class="addition">to the TextDecoder interface.
+
+<p class="addition">To the DOM intro note, add
+
+<p><dl class="domintro">
+  <dt><code><var>stream</var> = <a href="https://encoding.spec.whatwg.org/#dom-textdecoder" title="dom-TextDecoder">TextDecoder</a>
+  . <a href="#dom-textdecoder-stream" title="dom-TextDecoder-stream">stream</a>([<var>label</var> = "utf-8" [, <var>options</var>]])</code>
+  <dd>
+    <p>Returns a new <code>TransformStream</code> object that can be used to convert a stream of
+    bytes in the specified encoding to a stream of strings. <var>label</var> and <var>options</var>
+    are handled as with the TextDecoder constructor.
+    <p class="note no-backref">This is a static class method, not an object
+    method.
+</dl>
+
+<p class="addition">After the definition of the decode() method, add:
+
+<p>The
+<dfn id="dom-textdecoder-stream" title="dom-TextDecoder-stream"><code>stream(<var>label</var>, <var>options</var>)</code></dfn>
+method, when invoked, must run these steps:
+
+<ol>
+ <li><p>Let <var>encoding</var> be the result of
+ <a href="https://encoding.spec.whatwg.org/#concept-encoding-get" title="concept-encoding-get">getting an encoding</a> from
+ <var>label</var>.
+
+ <li><p>If <var>encoding</var> is failure or <a href="https://encoding.spec.whatwg.org/#replacement">replacement</a>,
+ <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code>RangeError</code>.
+
+ <li><p>Let <var>transformer</var> be a new object with an
+ associated <b>decoder</b>, <b>stream</b>, <b>ignore BOM flag</b> (initially unset), <b>BOM seen
+ flag</b> (initially unset), and <b>error mode</b> (initially "<code title="">replacement</code>").
+
+ <li><p>Set <var>transformer</var>'s <b>encoding</b> to <var>encoding</var>.
+
+ <li><p>If <var>options</var>'s <code title="">fatal</code> member is
+ true, set <var>transformer</var>'s <b>error mode</b> to "<code>fatal</code>".
+
+ <li><p>If <var>options</var>'s <code title="">ignoreBOM</code> member is
+ true, set <var>transformer</var>'s <b>ignore BOM flag</b>.
+
+ <li><p>Set <b>decoder</b> to a new <b>encoding</b>'s decoder.
+
+ <li><p>Set <b>stream</b> to a new <a href="https://encoding.spec.whatwg.org/#concept-stream" title="concept-stream">stream</a>
+
+ <li><p>Set <var>transformer</var>["transform"] to a function which
+ takes <var>chunk</var>, <var>done</var>, <var>enqueue</var>, <var>closeReadable</var>,
+ <var>error</var> arguments and runs the <a href="#concept-td-decode-and-enqueue" title="concept-TD-decode-and-enqueue">decode and
+ enqueue a chunk</a> algorithm.
+
+ <li><p>Set <var>transform</var>["flush"] to a function which
+ takes <var>enqueue</var>, <var>closeReadable</var>, <var>error</var> arguments and runs
+ the <a href="#concept-td-flush-and-enqueue" title="concept-TD-flush-and-enqueue">flush and enqueue</a> algorithm.
+
+ <li><p>Let <var>t</var> be the result of calling the initial value of TransformStream as a
+ constructor with <var>transformer</var>.
+
+ <li><p>Return <var>t</var>.
+</ol>
+
+<p>The <dfn id="concept-td-decode-and-enqueue" title="concept-TD-decode-and-enqueue">decode and enqueue a chunk</dfn> algorithm, which
+transforms a chunk of data to a string, runs these steps:
+
+<ol>
+ <li><p><a href="https://encoding.spec.whatwg.org/#concept-stream-push" title="concept-stream-push">Push</a> a
+ <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#dfn-get-buffer-source-copy" title="get a copy of the bytes held by the buffer source">copy of</a>
+ <var>chunk</var> to <b>stream</b>.
+
+ <li><p>Let <var>output</var> be a new <a href="https://encoding.spec.whatwg.org/#concept-stream" title="concept-stream">stream</a>.
+
+ <li>
+  <p>While true, run these substeps:
+
+  <ol>
+   <li><p>Let <var>token</var> be the result of
+   <a href="https://encoding.spec.whatwg.org/#concept-stream-read" title="concept-stream-read">reading</a> from <b>stream</b>.
+
+   <li>
+    <p>If <var>token</var> is <a href="https://encoding.spec.whatwg.org/#end-of-stream">end-of-stream</a>,
+    <ol>
+     <li><p>Call <var>enqueue</var> as a function, passing
+     <var>output</var>, <a href="https://encoding.spec.whatwg.org/#concept-td-serialize" title="concept-TD-serialize">serialized</a>.
+     <li><p>Call <var>done</var> as a function.
+     <li><p>Return.
+    </ol>
+
+   <li>
+    <p>Otherwise, run these subsubsteps:
+
+    <ol>
+     <li><p>Let <var>result</var> be the result of
+     <a href="https://encoding.spec.whatwg.org/#concept-encoding-process" title="concept-encoding-process">processing</a> <var>token</var> for
+     <b>decoder</b>, <b>stream</b>, <var>output</var>, and <b>error mode</b>.
+
+     <li><p>If <var>result</var> is <a href="https://encoding.spec.whatwg.org/#error">error</a>,
+     <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#dfn-throw" title="throw">throw</a> a <code>TypeError</code>.
+
+     <li><p>Otherwise, do nothing.
+    </ol>
+  </ol>
+</ol>
+
+<p>The <dfn id="concept-td-flush-and-enqueue" title="concept-TD-flush-and-enqueue">flush and enqueue</dfn> algorithm, which handles the
+end of data from the input ReadableStream, runs these steps:
+
+<ol>
+  <li><p>Let <var>output</var> be a new <a href="#concept-stream" title="concept-stream">stream</a>.
+  <li><p>Let <var>result</var> be the result of
+  <a href="https://encoding.spec.whatwg.org/#concept-encoding-process" title="concept-encoding-process">processing</a> <a href="https://encoding.spec.whatwg.org/#end-of-stream">end-of-stream</a> for
+  <b>decoder</b>, <b>stream</b>, <var>output</var>, and <b>error mode</b>.
+
+  <li><p>If <var>result</var> is <a href="https://encoding.spec.whatwg.org/#finished">finished</a>,
+  <ol>
+   <li><p>Call <var>enqueue</var>, passing
+   <var>output</var>, <a href="https://encoding.spec.whatwg.org/#concept-td-serialize" title="concept-TD-serialize">serialized</a>.
+   <li><p>Return.
+  </ol>
+
+  <li><p>Otherwise,
+  <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#dfn-throw" title="throw">throw</a> a <code>TypeError</code>.
+</ol>
+
+<h3>In 8.2 Interface <code title="">TextEncoder</code>, add:</h3>
+
+<p class="addition">In the IDL, add
+
+<p><pre class="idl">
+  static TransformStream <a href="#dom-textencoder-stream"
+  title="dom-TextEncoder-stream">stream</a>();
+</pre>
+
+<p class="addition">to the TextEncoder interface.
+
+<p class="addition">To the DOM intro note, add
+
+<p><dl class="domintro">
+ <dt><code><a href="https://encoding.spec.whatwg.org/#dom-textencoder" title="dom-TextEncoder">TextEncoder</a> . <a href="#dom-textencoder-stream" title="dom-TextEncoder-stream">stream</a>()</code>
+ <dd><p>Returns a new <code>TransformStream</code> object that can be used to convert a stream of
+     strings to a stream of bytes in the <a href="https://encoding.spec.whatwg.org/#utf-8">UTF-8</a> encoding.
+     <p class="note no-backref">This is a static class method, not an object method.
+</dl>
+
+<p class="addition">After the definition of the encode() method, add:
+
+<p>The
+<dfn id="dom-textencoder-stream" title="dom-TextEncoder-stream"><code>stream()</code></dfn> method, when invoked, must run these
+steps:
+
+<ol>
+ <li><p>Let <var>transformer</var> be a new object.
+
+ <li><p>Set <var>tranformer</var>["transform"] to a function which
+takes <var>chunk</var>, <var>done</var>, <var>enqueue</var>, <var>closeReadable</var>, <var>error</var> arguments and performs the following steps:
+
+ <ol>
+  <li><p>Convert <var>chunk</var> to a <a href="https://encoding.spec.whatwg.org/#concept-stream" title="concept-stream">stream</a>.
+
+  <li><p>Let <var>output</var> be a new <a href="https://encoding.spec.whatwg.org/#concept-stream" title="concept-stream">stream</a>.
+
+  <li><p>Use UTF-8's encoder as the <b>encoder</b> for the following steps.
+
+  <li><p>While true, run these substeps:
+
+<!-- TODO(ricea): This algorithm cannot deal with having a surrogate pair split between two
+chunks. This is consistent with TextEncoder.encode() but arguably is a worse limitation in the
+streaming case. -->
+
+  <ol>
+   <li><p>Let <var>token</var> be the result of
+   <a href="https://encoding.spec.whatwg.org/#concept-stream-read" title="concept-stream-read">reading</a> from <var>chunk</var>.
+
+   <li><p>Let <var>result</var> be the result of
+   <a href="https://encoding.spec.whatwg.org/#concept-encoding-process" title="concept-encoding-process">processing</a> <var>token</var> for
+   <b>encoder</b>, <var>input</var>, <var>output</var>.
+
+   <li><p>If <var>result</var> is finished, run these substeps:
+   <ol>
+    <li><p>Convert <var>output</var> into a byte sequence.
+
+    <li><p>Call <var>enqueue</var> as a function with
+    a <code title="">Uint8Array</code> object wrapping an
+    <code title="">ArrayBuffer</code> containing <var>output</var>.
+
+    <li><p>Call <var>done</var> as a function.
+
+    <li><p>Return.
+   </ol>
+  </ol>
+ </ol>
+
+ <li><p>Let <var>t</var> be the result of calling the initial value of TransformStream as a constructor with <var>transformer</var>.
+
+ <li><p>Return <var>t</var>.
+</ol>
