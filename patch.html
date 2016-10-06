@@ -22,7 +22,7 @@ Standard</a></h1>
 <p class="addition">In the IDL, add
 
 <p><pre class="idl">
- static TransformStream <a href="#dom-textdecoder-stream" title="dom-TextDecoder-stream">stream</a>(optional DOMString <var>label</var> = "utf-8", optional <a href="https://encoding.spec.whatwg.org/#textdecoderoptions">TextDecoderOptions</a> <var>options</var>);
+ static <a class="external" data-anolis-spec="streams" href="https://streams.spec.whatwg.org/#ts">TransformStream</a> <a href="#dom-textdecoder-stream" title="dom-TextDecoder-stream">stream</a>(optional DOMString <var>label</var> = "utf-8", optional <a href="https://encoding.spec.whatwg.org/#textdecoderoptions">TextDecoderOptions</a> <var>options</var>);
 </pre>
 
 <p class="addition">to the TextDecoder interface.
@@ -33,11 +33,10 @@ Standard</a></h1>
   <dt><code><var>stream</var> = <a href="https://encoding.spec.whatwg.org/#dom-textdecoder" title="dom-TextDecoder">TextDecoder</a>
   . <a href="#dom-textdecoder-stream" title="dom-TextDecoder-stream">stream</a>([<var>label</var> = "utf-8" [, <var>options</var>]])</code>
   <dd>
-    <p>Returns a new <code>TransformStream</code> object that can be used to convert a stream of
+    <p>Returns a new <a href="https://streams.spec.whatwg.org/#ts"><code class="external" data-anolis-spec="streams">TransformStream</code></a> object that can be used to convert a stream of
     bytes in the specified encoding to a stream of strings. <var>label</var> and <var>options</var>
-    are handled as with the TextDecoder constructor.
-    <p class="note no-backref">This is a static class method, not an object
-    method.
+    are handled as with the <a href="https://encoding.spec.whatwg.org/#textdecoder"><code>TextDecoder</code></a> constructor.
+    <p class="note no-backref">This is a static class method, not an object method.
 </dl>
 
 <p class="addition">After the definition of the decode() method, add:
@@ -52,35 +51,43 @@ method, when invoked, must run these steps:
  <var>label</var>.
 
  <li><p>If <var>encoding</var> is failure or <a href="https://encoding.spec.whatwg.org/#replacement">replacement</a>,
- <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code>RangeError</code>.
+ <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <a href="https://tc39.github.io/ecma262/#sec-native-error-types-used-in-this-standard-rangeerror"><code class="external" data-anolis-spec="ecmascript">RangeError</code></a>.
 
- <li><p>Let <var>transformer</var> be a new object with an
- associated <b>decoder</b>, <b>stream</b>, <b>ignore BOM flag</b> (initially unset), <b>BOM seen
- flag</b> (initially unset), and <b>error mode</b> (initially "<code title="">replacement</code>").
+ <li><p>Let <var>transformer</var> be a new object with an associated
+ <dfn id="slot-td-transformer-decoder" title="slot-TD-transformer-decoder"><b>decoder</b></dfn>,
+ <dfn id="slot-td-transformer-stream" title="slot-TD-transformer-stream"><b>stream</b></dfn>,
+ <dfn id="slot-td-transformer-ignore-bom-flag" title="slot-TD-transformer-ignore-BOM-flag"><b>ignore BOM flag</b></dfn> (initially unset),
+ <dfn id="slot-td-transformer-bom-seen-flag" title="slot-TD-transformer-BOM-seen-flag">BOM seen flag</dfn> (initially unset), and
+ <dfn id="slot-td-transformer-error-mode" title="slot-TD-transformer-error-mode"><b>error mode</b></dfn> (initially
+ "<code title="">replacement</code>").
 
- <li><p>Set <var>transformer</var>'s <b>encoding</b> to <var>encoding</var>.
+ <li><p>If <var>options</var>'s <code title="">fatal</code> member is true,
+ set <var>transformer</var>'s <a href="#slot-td-transformer-error-mode" title="slot-TD-transformer-error-mode"><b>error mode</b></a> to
+ "<code>fatal</code>".
 
- <li><p>If <var>options</var>'s <code title="">fatal</code> member is
- true, set <var>transformer</var>'s <b>error mode</b> to "<code>fatal</code>".
+ <li><p>If <var>options</var>'s <code title="">ignoreBOM</code> member is true,
+ set <var>transformer</var>'s <a href="#slot-td-transformer-ignore-bom-flag" title="slot-TD-transformer-ignore-BOM-flag"><b>ignore BOM
+ flag</b></a>.
 
- <li><p>If <var>options</var>'s <code title="">ignoreBOM</code> member is
- true, set <var>transformer</var>'s <b>ignore BOM flag</b>.
+ <li><p>Set <a href="#slot-td-transformer-decoder" title="slot-TD-transformer-decoder"><b>decoder</b></a> to a
+ new <var>encoding</var>'s <a href="https://encoding.spec.whatwg.org/#decoder">decoder</a>.
 
- <li><p>Set <b>decoder</b> to a new <b>encoding</b>'s decoder.
-
- <li><p>Set <b>stream</b> to a new <a href="https://encoding.spec.whatwg.org/#concept-stream" title="concept-stream">stream</a>
+ <li><p>Set <a href="#slot-td-transformer-stream" title="slot-TD-transformer-stream"><b>stream</b></a> to a
+ new <a href="https://encoding.spec.whatwg.org/#concept-stream" title="concept-stream">stream</a>
 
  <li><p>Set <var>transformer</var>["transform"] to a function which
  takes <var>chunk</var>, <var>done</var>, <var>enqueue</var>, <var>closeReadable</var>,
  <var>error</var> arguments and runs the <a href="#concept-td-decode-and-enqueue" title="concept-TD-decode-and-enqueue">decode and
- enqueue a chunk</a> algorithm.
+ enqueue a chunk</a> algorithm on the <var>transformer</var> object.
 
  <li><p>Set <var>transform</var>["flush"] to a function which
  takes <var>enqueue</var>, <var>closeReadable</var>, <var>error</var> arguments and runs
- the <a href="#concept-td-flush-and-enqueue" title="concept-TD-flush-and-enqueue">flush and enqueue</a> algorithm.
+ the <a href="#concept-td-flush-and-enqueue" title="concept-TD-flush-and-enqueue">flush and enqueue</a> algorithm on
+ the <var>transformer</var> object.
 
- <li><p>Let <var>t</var> be the result of calling the initial value of TransformStream as a
- constructor with <var>transformer</var>.
+ <li><p>Let <var>t</var> be the result of calling the initial value of
+ <a href="https://streams.spec.whatwg.org/#ts"><code class="external" data-anolis-spec="streams">TransformStream</code></a> as a constructor
+ with <var>transformer</var>.
 
  <li><p>Return <var>t</var>.
 </ol>
@@ -90,8 +97,9 @@ transforms a chunk of data to a string, runs these steps:
 
 <ol>
  <li><p><a href="https://encoding.spec.whatwg.org/#concept-stream-push" title="concept-stream-push">Push</a> a
- <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#dfn-get-buffer-source-copy" title="get a copy of the bytes held by the buffer source">copy of</a>
- <var>chunk</var> to <b>stream</b>.
+ <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#dfn-get-buffer-source-copy" title="get a copy of the bytes held by the buffer source">copy
+ of</a> <var>chunk</var> to <var>transformer</var>'s
+ <a href="#slot-td-transformer-stream" title="slot-TD-transformer-stream"><b>stream</b></a>.
 
  <li><p>Let <var>output</var> be a new <a href="https://encoding.spec.whatwg.org/#concept-stream" title="concept-stream">stream</a>.
 
@@ -100,7 +108,8 @@ transforms a chunk of data to a string, runs these steps:
 
   <ol>
    <li><p>Let <var>token</var> be the result of
-   <a href="https://encoding.spec.whatwg.org/#concept-stream-read" title="concept-stream-read">reading</a> from <b>stream</b>.
+   <a href="https://encoding.spec.whatwg.org/#concept-stream-read" title="concept-stream-read">reading</a>
+   from <var>transformer</var>'s <a href="#slot-td-transformer-stream" title="slot-TD-transformer-stream"><b>stream</b></a>.
 
    <li>
     <p>If <var>token</var> is <a href="https://encoding.spec.whatwg.org/#end-of-stream">end-of-stream</a>,
@@ -117,10 +126,14 @@ transforms a chunk of data to a string, runs these steps:
     <ol>
      <li><p>Let <var>result</var> be the result of
      <a href="https://encoding.spec.whatwg.org/#concept-encoding-process" title="concept-encoding-process">processing</a> <var>token</var> for
-     <b>decoder</b>, <b>stream</b>, <var>output</var>, and <b>error mode</b>.
+     <var>transformer</var>'s <a href="#slot-td-transformer-decoder" title="slot-TD-transformer-decoder"><b>decoder</b></a>
+     and <a href="#slot-td-transformer-stream" title="slot-TD-transformer-stream"><b>stream</b></a>, <var>output</var>,
+     and <var>transformer</var>'s <a href="#slot-td-transformer-error-mode" title="slot-TD-transformer-error-mode"><b>error
+     mode</b></a>.
 
      <li><p>If <var>result</var> is <a href="https://encoding.spec.whatwg.org/#error">error</a>,
-     <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#dfn-throw" title="throw">throw</a> a <code>TypeError</code>.
+     <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#dfn-throw" title="throw">throw</a>
+     a <a href="https://tc39.github.io/ecma262/#sec-native-error-types-used-in-this-standard-typeerror"><code class="external" data-anolis-spec="ecmascript">TypeError</code></a>.
 
      <li><p>Otherwise, do nothing.
     </ol>
@@ -128,13 +141,16 @@ transforms a chunk of data to a string, runs these steps:
 </ol>
 
 <p>The <dfn id="concept-td-flush-and-enqueue" title="concept-TD-flush-and-enqueue">flush and enqueue</dfn> algorithm, which handles the
-end of data from the input ReadableStream, runs these steps:
+end of data from the input <a href="https://streams.spec.whatwg.org/#rs-class"><code class="external" data-anolis-spec="streams">ReadableStream</code></a>, runs these steps:
 
 <ol>
-  <li><p>Let <var>output</var> be a new <a href="#concept-stream" title="concept-stream">stream</a>.
+  <li><p>Let <var>output</var> be a new <a href="https://encoding.spec.whatwg.org/#concept-stream" title="concept-stream">stream</a>.
+
   <li><p>Let <var>result</var> be the result of
   <a href="https://encoding.spec.whatwg.org/#concept-encoding-process" title="concept-encoding-process">processing</a> <a href="https://encoding.spec.whatwg.org/#end-of-stream">end-of-stream</a> for
-  <b>decoder</b>, <b>stream</b>, <var>output</var>, and <b>error mode</b>.
+  <var>transformer</var>'s <a href="#slot-td-transformer-decoder" title="slot-TD-transformer-decoder"><b>decoder</b></a>
+  and <a href="#slot-td-transformer-stream" title="slot-TD-transformer-stream"><b>stream</b></a>, <var>output</var>,
+  and <a href="#slot-td-transformer-error-mode" title="slot-TD-transformer-error-mode"><b>error mode</b></a>.
 
   <li><p>If <var>result</var> is <a href="https://encoding.spec.whatwg.org/#finished">finished</a>,
   <ol>
@@ -144,7 +160,8 @@ end of data from the input ReadableStream, runs these steps:
   </ol>
 
   <li><p>Otherwise,
-  <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#dfn-throw" title="throw">throw</a> a <code>TypeError</code>.
+  <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#dfn-throw" title="throw">throw</a>
+  a <a href="https://tc39.github.io/ecma262/#sec-native-error-types-used-in-this-standard-typeerror"><code class="external" data-anolis-spec="ecmascript">TypeError</code></a>.
 </ol>
 
 <h3>In 8.2 Interface <code title="">TextEncoder</code>, add:</h3>
@@ -152,8 +169,7 @@ end of data from the input ReadableStream, runs these steps:
 <p class="addition">In the IDL, add
 
 <p><pre class="idl">
-  static TransformStream <a href="#dom-textencoder-stream"
-  title="dom-TextEncoder-stream">stream</a>();
+  static <a class="external" data-anolis-spec="streams" href="https://streams.spec.whatwg.org/#ts">TransformStream</a> <a href="#dom-textencoder-stream" title="dom-TextEncoder-stream">stream</a>();
 </pre>
 
 <p class="addition">to the TextEncoder interface.
@@ -162,9 +178,10 @@ end of data from the input ReadableStream, runs these steps:
 
 <p><dl class="domintro">
  <dt><code><a href="https://encoding.spec.whatwg.org/#dom-textencoder" title="dom-TextEncoder">TextEncoder</a> . <a href="#dom-textencoder-stream" title="dom-TextEncoder-stream">stream</a>()</code>
- <dd><p>Returns a new <code>TransformStream</code> object that can be used to convert a stream of
+ <dd><p>Returns a new <a href="https://streams.spec.whatwg.org/#ts"><code class="external" data-anolis-spec="streams">TransformStream</code></a> object that can be used to convert a stream of
      strings to a stream of bytes in the <a href="https://encoding.spec.whatwg.org/#utf-8">UTF-8</a> encoding.
-     <p class="note no-backref">This is a static class method, not an object method.
+     <p class="note no-backref">This is a static class method, not an object
+     method.
 </dl>
 
 <p class="addition">After the definition of the encode() method, add:
@@ -184,7 +201,7 @@ takes <var>chunk</var>, <var>done</var>, <var>enqueue</var>, <var>closeReadable<
 
   <li><p>Let <var>output</var> be a new <a href="https://encoding.spec.whatwg.org/#concept-stream" title="concept-stream">stream</a>.
 
-  <li><p>Use UTF-8's encoder as the <b>encoder</b> for the following steps.
+  <li><p>Let <var>encoder</var> be <a href="https://encoding.spec.whatwg.org/#utf-8">UTF-8</a>'s <a href="https://encoding.spec.whatwg.org/#encoder">encoder</a>.
 
   <li><p>While true, run these substeps:
 
@@ -198,15 +215,15 @@ streaming case. -->
 
    <li><p>Let <var>result</var> be the result of
    <a href="https://encoding.spec.whatwg.org/#concept-encoding-process" title="concept-encoding-process">processing</a> <var>token</var> for
-   <b>encoder</b>, <var>input</var>, <var>output</var>.
+   <var>encoder</var>, <var>input</var>, <var>output</var>.
 
    <li><p>If <var>result</var> is finished, run these substeps:
    <ol>
     <li><p>Convert <var>output</var> into a byte sequence.
 
     <li><p>Call <var>enqueue</var> as a function with
-    a <code title="">Uint8Array</code> object wrapping an
-    <code title="">ArrayBuffer</code> containing <var>output</var>.
+    a <a href="https://tc39.github.io/ecma262/#sec-typedarray-objects"><code class="external" data-anolis-spec="ecmascript">Uint8Array</code></a> object wrapping an
+    <a href="https://tc39.github.io/ecma262/#sec-arraybuffer-objects"><code class="external" data-anolis-spec="ecmascript">ArrayBuffer</code></a> containing <var>output</var>.
 
     <li><p>Call <var>done</var> as a function.
 
@@ -215,7 +232,8 @@ streaming case. -->
   </ol>
  </ol>
 
- <li><p>Let <var>t</var> be the result of calling the initial value of TransformStream as a constructor with <var>transformer</var>.
+ <li><p>Let <var>t</var> be the result of calling the initial value of <a href="https://streams.spec.whatwg.org/#ts"><code class="external" data-anolis-spec="streams">TransformStream</code></a>
+ as a constructor with <var>transformer</var>.
 
  <li><p>Return <var>t</var>.
 </ol>
