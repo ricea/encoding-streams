@@ -32,7 +32,7 @@ Standard</a></h1>
 <p class="addition">In the IDL, add
 
 <p><pre class="idl">
- static <a class="external" data-anolis-spec="streams" href="https://streams.spec.whatwg.org/#ts">TransformStream</a> <a href="#dom-textdecoder-stream" title="dom-TextDecoder-stream">stream</a>(optional DOMString <var>label</var> = "utf-8", optional <a href="https://encoding.spec.whatwg.org/#textdecoderoptions">TextDecoderOptions</a> <var>options</var>);
+  static <a class="external" data-anolis-spec="streams" href="https://streams.spec.whatwg.org/#ts">TransformStream</a> <a href="#dom-textdecoder-stream" title="dom-TextDecoder-stream">stream</a>(optional DOMString <var>label</var> = "utf-8", optional <a href="http://encoding.spec.whatwg.org/#textdecoderoptions">TextDecoderOptions</a> <var>options</var>);
 </pre>
 
 <p class="addition">to the TextDecoder interface.
@@ -40,12 +40,12 @@ Standard</a></h1>
 <p class="addition">To the DOM intro note, add
 
 <p><dl class="domintro">
-  <dt><code><var>stream</var> = <a href="https://encoding.spec.whatwg.org/#dom-textdecoder" title="dom-TextDecoder">TextDecoder</a>
+  <dt><code><var>stream</var> = <a href="http://encoding.spec.whatwg.org/#dom-textdecoder" title="dom-TextDecoder">TextDecoder</a>
   . <a href="#dom-textdecoder-stream" title="dom-TextDecoder-stream">stream</a>([<var>label</var> = "utf-8" [, <var>options</var>]])</code>
   <dd>
     <p>Returns a new <a href="https://streams.spec.whatwg.org/#ts"><code class="external" data-anolis-spec="streams">TransformStream</code></a> object that can be used to convert a stream of
     bytes in the specified encoding to a stream of strings. <var>label</var> and <var>options</var>
-    are handled as with the <a href="https://encoding.spec.whatwg.org/#textdecoder"><code>TextDecoder</code></a> constructor.
+    are handled as with the <a href="http://encoding.spec.whatwg.org/#textdecoder"><code>TextDecoder</code></a> constructor.
     <p class="note no-backref">This is a static class method, not an object method.
 </dl>
 
