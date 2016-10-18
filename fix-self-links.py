@@ -29,12 +29,12 @@ def read_ids(files):
 
 def replace_links(files, ids):
   """Rewrite the specified HTML files in place. Any self-link that is not
-  contained in ids is prepended with http://encoding.spec.whatwg.org/.
+  contained in ids is prepended with https://encoding.spec.whatwg.org/.
   """
   def replace_one_link(match):
     if match.group(1) in ids:
       return match.group(0)
-    return 'href="http://encoding.spec.whatwg.org/#%s"' % match.group(1)
+    return 'href="https://encoding.spec.whatwg.org/#%s"' % match.group(1)
 
   pattern = re.compile(r'\bhref="#([^\"<>]+)"')
   for line in fileinput.input(files, inplace=True):
