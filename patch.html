@@ -32,7 +32,7 @@ Standard</a></h1>
 <p class="addition">In the IDL, add
 
 <p><pre class="idl">
-  static <a class="external" data-anolis-spec="streams" href="https://streams.spec.whatwg.org/#ts">TransformStream</a> <a href="#dom-textdecoder-stream" title="dom-TextDecoder-stream">stream</a>(optional DOMString <var>label</var> = "utf-8", optional <a href="http://encoding.spec.whatwg.org/#textdecoderoptions">TextDecoderOptions</a> <var>options</var>);
+ static <a class="external" data-anolis-spec="streams" href="https://streams.spec.whatwg.org/#ts">TransformStream</a> <a href="#dom-textdecoder-stream" title="dom-TextDecoder-stream">stream</a>(optional DOMString <var>label</var> = "utf-8", optional <a href="https://encoding.spec.whatwg.org/#textdecoderoptions">TextDecoderOptions</a> <var>options</var>);
 </pre>
 
 <p class="addition">to the TextDecoder interface.
@@ -40,12 +40,12 @@ Standard</a></h1>
 <p class="addition">To the DOM intro note, add
 
 <p><dl class="domintro">
-  <dt><code><var>stream</var> = <a href="http://encoding.spec.whatwg.org/#dom-textdecoder" title="dom-TextDecoder">TextDecoder</a>
+  <dt><code><var>stream</var> = <a href="https://encoding.spec.whatwg.org/#dom-textdecoder" title="dom-TextDecoder">TextDecoder</a>
   . <a href="#dom-textdecoder-stream" title="dom-TextDecoder-stream">stream</a>([<var>label</var> = "utf-8" [, <var>options</var>]])</code>
   <dd>
     <p>Returns a new <a href="https://streams.spec.whatwg.org/#ts"><code class="external" data-anolis-spec="streams">TransformStream</code></a> object that can be used to convert a stream of
     bytes in the specified encoding to a stream of strings. <var>label</var> and <var>options</var>
-    are handled as with the <a href="http://encoding.spec.whatwg.org/#textdecoder"><code>TextDecoder</code></a> constructor.
+    are handled as with the <a href="https://encoding.spec.whatwg.org/#textdecoder"><code>TextDecoder</code></a> constructor.
     <p class="note no-backref">This is a static class method, not an object method.
 </dl>
 
@@ -86,12 +86,12 @@ method, when invoked, must run these steps:
  new <a href="https://encoding.spec.whatwg.org/#concept-stream" title="concept-stream">stream</a>
 
  <li><p>Set <var>transformer</var>["transform"] to a function which
- takes <var>chunk</var>, <var>done</var>, <var>enqueue</var>, <var>closeReadable</var>,
- <var>error</var> arguments and runs the <a href="#concept-td-decode-and-enqueue" title="concept-TD-decode-and-enqueue">decode and
+ takes <var>chunk</var>, <var>controller</var> arguments and runs the
+ <a href="#concept-td-decode-and-enqueue" title="concept-TD-decode-and-enqueue">decode and
  enqueue a chunk</a> algorithm on the <var>transformer</var> object.
 
  <li><p>Set <var>transform</var>["flush"] to a function which
- takes <var>enqueue</var>, <var>closeReadable</var>, <var>error</var> arguments and runs
+ takes a <var>controller</var> argument and runs
  the <a href="#concept-td-flush-and-enqueue" title="concept-TD-flush-and-enqueue">flush and enqueue</a> algorithm on
  the <var>transformer</var> object.
 
@@ -124,9 +124,10 @@ transforms a chunk of data to a string, runs these steps:
    <li>
     <p>If <var>token</var> is <a href="https://encoding.spec.whatwg.org/#end-of-stream">end-of-stream</a>,
     <ol>
-     <li><p>Call <var>enqueue</var> as a function, passing
-     <var>output</var>, <a href="https://encoding.spec.whatwg.org/#concept-td-serialize" title="concept-TD-serialize">serialized</a>.
-     <li><p>Call <var>done</var> as a function.
+     <li><p><a class="external" data-anolis-spec="ecmascript" href="https://tc39.github.io/ecma262/#sec-invoke">Invoke</a> the <var>enqueue</var> method of
+     the <var>controller</var> object,
+     passing <var>output</var>, <a href="https://encoding.spec.whatwg.org/#concept-td-serialize" title="concept-TD-serialize">serialized</a>, as the sole
+     argument.
      <li><p>Return.
     </ol>
 
@@ -143,7 +144,7 @@ transforms a chunk of data to a string, runs these steps:
 
      <li><p>If <var>result</var> is <a href="https://encoding.spec.whatwg.org/#error">error</a>,
      <a class="external" data-anolis-spec="webidl" href="https://heycam.github.io/webidl/#dfn-throw" title="throw">throw</a>
-     a <a href="https://tc39.github.io/ecma262/#sec-native-error-types-used-in-this-standard-typeerror"><code class="external" data-anolis-spec="ecmascript">TypeError</code></a>.
+     a <a href="https://tc39.github.io/ecma262/#sec-native-error-types-used-in-this-standard-typeerror"><code class="external" data-anolis-spec="ecmascript">TypeError</code></a> exception.
 
      <li><p>Otherwise, do nothing.
     </ol>
@@ -164,8 +165,10 @@ end of data from the input <a href="https://streams.spec.whatwg.org/#rs-class"><
 
   <li><p>If <var>result</var> is <a href="https://encoding.spec.whatwg.org/#finished">finished</a>,
   <ol>
-   <li><p>Call <var>enqueue</var>, passing
-   <var>output</var>, <a href="https://encoding.spec.whatwg.org/#concept-td-serialize" title="concept-TD-serialize">serialized</a>.
+    <li><p><a class="external" data-anolis-spec="ecmascript" href="https://tc39.github.io/ecma262/#sec-invoke">Invoke</a> the <var>enqueue</var> method of
+    the <var>controller</var> object,
+    passing <var>output</var>, <a href="https://encoding.spec.whatwg.org/#concept-td-serialize" title="concept-TD-serialize">serialized</a>, as the sole
+    argument.
    <li><p>Return.
   </ol>
 
@@ -204,7 +207,7 @@ steps:
  <li><p>Let <var>transformer</var> be a new object.
 
  <li><p>Set <var>tranformer</var>["transform"] to a function which
-takes <var>chunk</var>, <var>done</var>, <var>enqueue</var>, <var>closeReadable</var>, <var>error</var> arguments and performs the following steps:
+ takes <var>chunk</var>, <var>controller</var> arguments and performs the following steps:
 
  <ol>
   <li><p>Convert <var>chunk</var> to a <a href="https://encoding.spec.whatwg.org/#concept-stream" title="concept-stream">stream</a>.
@@ -231,11 +234,10 @@ streaming case. -->
    <ol>
     <li><p>Convert <var>output</var> into a byte sequence.
 
-    <li><p>Call <var>enqueue</var> as a function with
-    a <a href="https://tc39.github.io/ecma262/#sec-typedarray-objects"><code class="external" data-anolis-spec="ecmascript">Uint8Array</code></a> object wrapping an
-    <a href="https://tc39.github.io/ecma262/#sec-arraybuffer-objects"><code class="external" data-anolis-spec="ecmascript">ArrayBuffer</code></a> containing <var>output</var>.
-
-    <li><p>Call <var>done</var> as a function.
+    <li><p><a class="external" data-anolis-spec="ecmascript" href="https://tc39.github.io/ecma262/#sec-invoke">Invoke</a> the <var>enqueue</var> method of
+    the <var>controller</var> object, passing a <a href="https://tc39.github.io/ecma262/#sec-typedarray-objects"><code class="external" data-anolis-spec="ecmascript">Uint8Array</code></a>
+    object wrapping an <a href="https://tc39.github.io/ecma262/#sec-arraybuffer-objects"><code class="external" data-anolis-spec="ecmascript">ArrayBuffer</code></a>
+    containing <var>output</var>, as the sole argument.
 
     <li><p>Return.
    </ol>
