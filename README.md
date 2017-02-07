@@ -11,7 +11,7 @@ This enables uses like
 ```javascript
 fetch(url)
   .then(response => {
-    let stringStream = response.body.pipeThough(TextDecoder.stream());
+    let stringStream = response.body.pipeThough(new TextDecoder());
     // stringStream is now a stream of strings.
   });
 ```
