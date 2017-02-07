@@ -45,16 +45,16 @@ Standard</a></h1>
 <p><dl class="domintro">
    <dt><code><var>decoder</var> . <a class="idl-code" data-link-type="attribute" href="#dom-textdecoder-readable">readable</a></code>
     <dd>
-     <p>Returns the result of running <a data-link-type="dfn" href="#textdecoder-encoding">encoding</a>’s <a data-link-type="dfn" href="#decoder">decoder</a> on the
+     <p>Returns the result of running <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-encoding">encoding</a>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#decoder">decoder</a> on the
   chunks written to <a class="idl-code" data-link-type="attribute" href="#dom-textdecoder-writable">writable</a>. Chunks read from <a class="idl-code" data-link-type="attribute" href="#dom-textdecoder-readable">readable</a> will always be strings. </p>
     <dt><code><var>encoder</var> . <a class="idl-code" data-link-type="attribute" href="#dom-textdecoder-writable">writable</a></code>
     <dd>
-     <p>Accepts <a data-link-type="idl" href="https://heycam.github.io/webidl/#BufferSource">BufferSource</a> chunks and runs them through <a data-link-type="dfn" href="#textdecoder-encoding">encoding</a>’s <a data-link-type="dfn" href="#decoder">decoder</a> before making them available to <a class="idl-code" data-link-type="attribute" href="#dom-textdecoder-readable">readable</a>. Typically this will be used via the <a class="idl-code" data-link-type="method">pipeThrough</a> method on a <a data-link-type="idl" href="https://streams.spec.whatwg.org/#rs-class">ReadableStream</a> source. </p>
+     <p>Accepts <a data-link-type="idl" href="https://heycam.github.io/webidl/#BufferSource">BufferSource</a> chunks and runs them through <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-encoding">encoding</a>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#decoder">decoder</a> before making them available to <a class="idl-code" data-link-type="attribute" href="#dom-textdecoder-readable">readable</a>. Typically this will be used via the <a class="idl-code" data-link-type="method">pipeThrough</a> method on a <a data-link-type="idl" href="https://streams.spec.whatwg.org/#rs-class">ReadableStream</a> source. </p>
 <pre class="example" id="example-textdecode-writable"><a class="self-link" href="#example-textdecode-writable"></a>var decoder = new TextDecoder(encoding);
 byteReadable
   .pipeThrough(decoder)
   .pipeTo(textWritable);</pre>
-     <p>If the <a data-link-type="dfn" href="#textdecoder-error-mode">error mode</a> is "<code>fatal</code>" and <a data-link-type="dfn" href="#textdecoder-encoding">encoding</a>’s <a data-link-type="dfn" href="#decoder">decoder</a> returns <a data-link-type="dfn" href="#error">error</a>, both <a class="idl-code" data-link-type="attribute" href="#dom-textdecoder-readable">readable</a> and <a class="idl-code" data-link-type="attribute" href="#dom-textdecoder-writable">writable</a> will be <a data-link-type="dfn">errored</a> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror">TypeError</a></code>. </p>
+     <p>If the <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-error-mode">error mode</a> is "<code>fatal</code>" and <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-encoding">encoding</a>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#decoder">decoder</a> returns <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#error">error</a>, both <a class="idl-code" data-link-type="attribute" href="#dom-textdecoder-readable">readable</a> and <a class="idl-code" data-link-type="attribute" href="#dom-textdecoder-writable">writable</a> will be <a data-link-type="dfn">errored</a> with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror">TypeError</a></code>. </p>
 </dl>
 
 <p class="addition">To the <dfn class="idl-code" data-dfn-for="TextDecoder" data-dfn-type="constructor" data-export="" id="dom-textdecoder"><code>TextDecoder(<var>label</var>, <var>options</var>)</code><a class="self-link" href="#dom-textdecoder"></a></dfn> constructor steps, before the final step, add:
@@ -62,10 +62,10 @@ byteReadable
       <li>
      <p>Let <var>transformer</var> be a new object. </p>
     <li>
-     <p>Set <var>transformer</var>["transform"] to a function which takes <var>chunk</var>, <var>controller</var> arguments and runs the <a data-link-type="dfn" href="#concept-td-decode-and-enqueue">decode and enqueue a chunk</a> algorithm with <a data-link-type="dfn" href="#textdecoder-encoding">encoding</a>, <a data-link-type="dfn" href="#textdecoder-decoder">decoder</a>, <a data-link-type="dfn" href="#textdecoder-stream">stream</a>, <a data-link-type="dfn" href="#textdecoder-ignore-bom-flag">ignore BOM flag</a>, <a data-link-type="dfn" href="#textdecoder-bom-seen-flag">BOM seen flag</a>, <a data-link-type="dfn" href="#textdecoder-error-mode">error mode</a>, and <a data-link-type="dfn" href="#textdecoder-do-not-flush-flag">do not flush flag</a>. </p>
+     <p>Set <var>transformer</var>["transform"] to a function which takes <var>chunk</var>, <var>controller</var> arguments and runs the <a data-link-type="dfn" href="#concept-td-decode-and-enqueue">decode and enqueue a chunk</a> algorithm with <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-encoding">encoding</a>, <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-decoder">decoder</a>, <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-stream">stream</a>, <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-ignore-bom-flag">ignore BOM flag</a>, <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-bom-seen-flag">BOM seen flag</a>, <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-error-mode">error mode</a>, and <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-do-not-flush-flag">do not flush flag</a>. </p>
     <li>
-     <p>Set <var>transformer</var>["flush"] to a function which takes a <var>controller</var> argument and runs the <a data-link-type="dfn" href="#concept-td-flush-and-enqueue">flush and enqueue</a> algorithm with <a data-link-type="dfn" href="#textdecoder-encoding">encoding</a>, <a data-link-type="dfn" href="#textdecoder-decoder">decoder</a>, <a data-link-type="dfn" href="#textdecoder-stream">stream</a>, <a data-link-type="dfn" href="#textdecoder-ignore-bom-flag">ignore BOM
-  flag</a>, <a data-link-type="dfn" href="#textdecoder-bom-seen-flag">BOM seen flag</a>, <a data-link-type="dfn" href="#textdecoder-error-mode">error mode</a>, and <a data-link-type="dfn" href="#textdecoder-do-not-flush-flag">do not flush flag</a>. </p>
+     <p>Set <var>transformer</var>["flush"] to a function which takes a <var>controller</var> argument and runs the <a data-link-type="dfn" href="#concept-td-flush-and-enqueue">flush and enqueue</a> algorithm with <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-encoding">encoding</a>, <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-decoder">decoder</a>, <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-stream">stream</a>, <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-ignore-bom-flag">ignore BOM
+  flag</a>, <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-bom-seen-flag">BOM seen flag</a>, <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-error-mode">error mode</a>, and <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-do-not-flush-flag">do not flush flag</a>. </p>
     <li>
      <p>Let <var>transform</var> be the result of calling the initial value of <a data-link-type="idl">TransformStream</a> as a constructor with <var>transformer</var>. </p>
     <li>
@@ -83,13 +83,13 @@ byteReadable
       <li>If <a data-link-type="dfn" href="#textdecoder-transform">transform</a>’s <code>readable</code> is <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-readablestream-locked">locked</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror">TypeError</a></code> exception.
     <li>
      If <a data-link-type="dfn" href="#textdecoder-transform">transform</a>’s <code>writable</code> is <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-readablestream-locked">locked</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror">TypeError</a></code> exception.
-     <p class="note" role="note">These steps ensure that the state of the <a data-link-type="dfn" href="#decoder">decoder</a> is not simultaneously modified by
+     <p class="note" role="note">These steps ensure that the state of the <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#decoder">decoder</a> is not simultaneously modified by
  the Streams API and this method. </p>
 </ol>
 
 <p class="addition">After the definition of the decode() method, add:
 
-   <p>The <dfn data-dfn-type="dfn" data-noexport="" id="concept-td-decode-and-enqueue">decode and enqueue a chunk<a class="self-link" href="#concept-td-decode-and-enqueue"></a></dfn> algorithm, given a <var>chunk</var>, <var>controller</var>, <a data-link-type="dfn" href="#textdecoder-encoding">encoding</a>, <a data-link-type="dfn" href="#textdecoder-decoder">decoder</a>, <a data-link-type="dfn" href="#textdecoder-stream">stream</a>, <a data-link-type="dfn" href="#textdecoder-ignore-bom-flag">ignore BOM flag</a>, <a data-link-type="dfn" href="#textdecoder-bom-seen-flag">BOM seen flag</a>, <a data-link-type="dfn" href="#textdecoder-error-mode">error mode</a>, and <a data-link-type="dfn" href="#textdecoder-do-not-flush-flag">do
+   <p>The <dfn data-dfn-type="dfn" data-noexport="" id="concept-td-decode-and-enqueue">decode and enqueue a chunk<a class="self-link" href="#concept-td-decode-and-enqueue"></a></dfn> algorithm, given a <var>chunk</var>, <var>controller</var>, <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-encoding">encoding</a>, <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-decoder">decoder</a>, <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-stream">stream</a>, <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-ignore-bom-flag">ignore BOM flag</a>, <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-bom-seen-flag">BOM seen flag</a>, <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-error-mode">error mode</a>, and <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-do-not-flush-flag">do
  not flush flag</a>, runs these steps: </p>
    <ol>
     <li>
@@ -103,23 +103,23 @@ byteReadable
     <li>
      <p>Assert: <var>controller</var> . enqueue supports the [[Call]] internal method. </p>
     <li>
-     <p>If the <a data-link-type="dfn" href="#textdecoder-do-not-flush-flag">do not flush flag</a> is unset, set <a data-link-type="dfn" href="#textdecoder-decoder">decoder</a> to a new <a data-link-type="dfn" href="#textdecoder-encoding">encoding</a>’s <a data-link-type="dfn" href="#decoder">decoder</a>, set <a data-link-type="dfn" href="#textdecoder-stream">stream</a> to a new <a data-link-type="dfn" href="#concept-stream">stream</a>, and unset the <a data-link-type="dfn" href="#textdecoder-bom-seen-flag">BOM seen flag</a>. </p>
+     <p>If the <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-do-not-flush-flag">do not flush flag</a> is unset, set <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-decoder">decoder</a> to a new <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-encoding">encoding</a>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#decoder">decoder</a>, set <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-stream">stream</a> to a new <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-stream">stream</a>, and unset the <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-bom-seen-flag">BOM seen flag</a>. </p>
     <li>
-     <p>Set the <a data-link-type="dfn" href="#textdecoder-do-not-flush-flag">do not flush flag</a>. </p>
+     <p>Set the <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-do-not-flush-flag">do not flush flag</a>. </p>
     <li>
-     <p><a data-link-type="dfn" href="#concept-stream-push">Push</a> a <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-get-buffer-source-copy">copy of</a> <var>chunk</var> to <a data-link-type="dfn" href="#textdecoder-stream">stream</a>. </p>
+     <p><a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-stream-push">Push</a> a <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-get-buffer-source-copy">copy of</a> <var>chunk</var> to <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-stream">stream</a>. </p>
     <li>
-     <p>Let <var>output</var> be a new <a data-link-type="dfn" href="#concept-stream">stream</a>. </p>
+     <p>Let <var>output</var> be a new <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-stream">stream</a>. </p>
     <li>
      <p>While true, run these substeps: </p>
      <ol>
       <li>
-       <p>Let <var>token</var> be the result of <a data-link-type="dfn" href="#concept-stream-read">reading</a> from <a data-link-type="dfn" href="#textdecoder-stream">stream</a>. </p>
+       <p>Let <var>token</var> be the result of <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-stream-read">reading</a> from <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-stream">stream</a>. </p>
       <li>
-       <p>If <var>token</var> is <a data-link-type="dfn" href="#end-of-stream">end-of-stream</a>, </p>
+       <p>If <var>token</var> is <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#end-of-stream">end-of-stream</a>, </p>
        <ol>
         <li>
-         <p><a data-link-type="dfn" href="https://heycam.github.io/webidl/#invoke-a-callback-function">Invoke</a> the <var>enqueue</var> method of the <var>controller</var> object, passing <var>output</var>, <a data-link-type="dfn" href="#concept-td-serialize">serialized</a>, as the sole argument. </p>
+         <p><a data-link-type="dfn" href="https://heycam.github.io/webidl/#invoke-a-callback-function">Invoke</a> the <var>enqueue</var> method of the <var>controller</var> object, passing <var>output</var>, <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-td-serialize">serialized</a>, as the sole argument. </p>
         <li>
          <p>Return. </p>
        </ol>
@@ -127,17 +127,17 @@ byteReadable
        <p>Otherwise, run these subsubsteps: </p>
        <ol>
         <li>
-         <p>Let <var>result</var> be the result of <a data-link-type="dfn" href="#concept-encoding-process">processing</a> <var>token</var> for <a data-link-type="dfn" href="#textdecoder-decoder">decoder</a>, <a data-link-type="dfn" href="#textdecoder-stream">stream</a>, <var>output</var>, and <a data-link-type="dfn" href="#textdecoder-error-mode">error mode</a>. </p>
+         <p>Let <var>result</var> be the result of <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-encoding-process">processing</a> <var>token</var> for <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-decoder">decoder</a>, <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-stream">stream</a>, <var>output</var>, and <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-error-mode">error mode</a>. </p>
         <li>
-         <p>If <var>result</var> is <a data-link-type="dfn" href="#error">error</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror">TypeError</a></code> exception. </p>
+         <p>If <var>result</var> is <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#error">error</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror">TypeError</a></code> exception. </p>
         <li>
          <p>Otherwise, do nothing. </p>
        </ol>
      </ol>
    </ol>
    <p>The <dfn data-dfn-type="dfn" data-noexport="" id="concept-td-flush-and-enqueue">flush and enqueue<a class="self-link" href="#concept-td-flush-and-enqueue"></a></dfn> algorithm, which handles the end
- of data from the input <a data-link-type="idl" href="https://streams.spec.whatwg.org/#rs-class">ReadableStream</a>, given a <var>controller</var>, <a data-link-type="dfn" href="#textdecoder-encoding">encoding</a>, <a data-link-type="dfn" href="#textdecoder-decoder">decoder</a>, <a data-link-type="dfn" href="#textdecoder-stream">stream</a>, <a data-link-type="dfn" href="#textdecoder-ignore-bom-flag">ignore BOM flag</a>, <a data-link-type="dfn" href="#textdecoder-bom-seen-flag">BOM seen flag</a>, <a data-link-type="dfn" href="#textdecoder-error-mode">error
- mode</a>, and <a data-link-type="dfn" href="#textdecoder-do-not-flush-flag">do not flush flag</a>, runs these steps: </p>
+ of data from the input <a data-link-type="idl" href="https://streams.spec.whatwg.org/#rs-class">ReadableStream</a>, given a <var>controller</var>, <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-encoding">encoding</a>, <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-decoder">decoder</a>, <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-stream">stream</a>, <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-ignore-bom-flag">ignore BOM flag</a>, <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-bom-seen-flag">BOM seen flag</a>, <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-error-mode">error
+ mode</a>, and <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-do-not-flush-flag">do not flush flag</a>, runs these steps: </p>
    <ol>
     <li>
      <p>Assert: <a data-link-type="dfn" href="https://w3c.github.io/ServiceWorker/#dfn-type">Type</a>(<var>controller</var>) is Object. </p>
@@ -146,19 +146,19 @@ byteReadable
     <li>
      <p>Assert: <var>controller</var> . enqueue supports the [[Call]] internal method. </p>
     <li>
-     <p>If the <a data-link-type="dfn" href="#textdecoder-do-not-flush-flag">do not flush flag</a> is unset, set <a data-link-type="dfn" href="#textdecoder-decoder">decoder</a> to a new <a data-link-type="dfn" href="#textdecoder-encoding">encoding</a>’s <a data-link-type="dfn" href="#decoder">decoder</a>, set <a data-link-type="dfn" href="#textdecoder-stream">stream</a> to a new <a data-link-type="dfn" href="#concept-stream">stream</a>, and unset the <a data-link-type="dfn" href="#textdecoder-bom-seen-flag">BOM seen
+     <p>If the <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-do-not-flush-flag">do not flush flag</a> is unset, set <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-decoder">decoder</a> to a new <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-encoding">encoding</a>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#decoder">decoder</a>, set <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-stream">stream</a> to a new <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-stream">stream</a>, and unset the <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-bom-seen-flag">BOM seen
  flag</a>. </p>
     <li>
-     <p>Unset the <a data-link-type="dfn" href="#textdecoder-do-not-flush-flag">do not flush flag</a>. </p>
+     <p>Unset the <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-do-not-flush-flag">do not flush flag</a>. </p>
     <li>
-     <p>Let <var>output</var> be a new <a data-link-type="dfn" href="#concept-stream">stream</a>. </p>
+     <p>Let <var>output</var> be a new <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-stream">stream</a>. </p>
     <li>
-     <p>Let <var>result</var> be the result of <a data-link-type="dfn" href="#concept-encoding-process">processing</a> <a data-link-type="dfn" href="#end-of-stream">end-of-stream</a> for <var>transformer</var>’s <a data-link-type="dfn" href="#textdecoder-decoder">decoder</a> and <a data-link-type="dfn" href="#textdecoder-stream">stream</a>, <var>output</var>, and <a data-link-type="dfn" href="#textdecoder-error-mode">error mode</a>. </p>
+     <p>Let <var>result</var> be the result of <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-encoding-process">processing</a> <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#end-of-stream">end-of-stream</a> for <var>transformer</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-decoder">decoder</a> and <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-stream">stream</a>, <var>output</var>, and <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-error-mode">error mode</a>. </p>
     <li>
-     <p>If <var>result</var> is <a data-link-type="dfn" href="#finished">finished</a>, </p>
+     <p>If <var>result</var> is <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#finished">finished</a>, </p>
      <ol>
       <li>
-       <p><a data-link-type="dfn" href="https://heycam.github.io/webidl/#invoke-a-callback-function">Invoke</a> the <var>enqueue</var> method of the <var>controller</var> object, passing <var>output</var>, <a data-link-type="dfn" href="#concept-td-serialize">serialized</a>, as the sole argument. </p>
+       <p><a data-link-type="dfn" href="https://heycam.github.io/webidl/#invoke-a-callback-function">Invoke</a> the <var>enqueue</var> method of the <var>controller</var> object, passing <var>output</var>, <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-td-serialize">serialized</a>, as the sole argument. </p>
       <li>
        <p>Return. </p>
      </ol>
@@ -184,11 +184,11 @@ byteReadable
 <p><dl class="domintro">
     <dt><code><var>encoder</var> . <a class="idl-code" data-link-type="attribute" href="#dom-textencoder-readable">readable</a></code>
     <dd>
-     <p>Returns the result of running <a data-link-type="dfn" href="#utf-8">UTF-8</a>’s <a data-link-type="dfn" href="#encoder">encoder</a> on the
+     <p>Returns the result of running <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8">UTF-8</a>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#encoder">encoder</a> on the
   chunks written to <a class="idl-code" data-link-type="attribute" href="#dom-textencoder-writable">writable</a>. Chunks read from <a class="idl-code" data-link-type="attribute" href="#dom-textencoder-readable">readable</a> will always have type <a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-Uint8Array">Uint8Array</a>. </p>
     <dt><code><var>encoder</var> . <a class="idl-code" data-link-type="attribute" href="#dom-textencoder-writable">writable</a></code>
     <dd>
-     <p>Accepts <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-USVString">USVString</a></code> chunks and runs them through <a data-link-type="dfn" href="#utf-8">UTF-8</a>’s <a data-link-type="dfn" href="#encoder">encoder</a> before making them available to <a class="idl-code" data-link-type="attribute" href="#dom-textencoder-readable">readable</a>. Typically this will be
+     <p>Accepts <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-USVString">USVString</a></code> chunks and runs them through <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8">UTF-8</a>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#encoder">encoder</a> before making them available to <a class="idl-code" data-link-type="attribute" href="#dom-textencoder-readable">readable</a>. Typically this will be
   used via the <a class="idl-code" data-link-type="method">pipeThrough</a> method on a <a data-link-type="idl" href="https://streams.spec.whatwg.org/#rs-class">ReadableStream</a> source. </p>
 <pre class="example" id="example-textencode-writable"><a class="self-link" href="#example-textencode-writable"></a>textReadable
   .pipeThrough(new TextEncoder())
@@ -218,7 +218,7 @@ byteReadable
      <li>If <a data-link-type="dfn" href="#textencoder-transform">transform</a>’s <code>readable</code> is <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-readablestream-locked">locked</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror">TypeError</a></code> exception.
     <li>
      If <a data-link-type="dfn" href="#textencoder-transform">transform</a>’s <code>writable</code> is <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-readablestream-locked">locked</a>, <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-throw">throw</a> a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror">TypeError</a></code> exception.
-     <p class="note" role="note">These steps are for consistent behaviour with the <a data-link-type="idl" href="#textdecoder">TextDecoder</a> <a class="idl-code" data-link-type="method" href="#dom-textdecoder-decode"><code>decode(<var>input</var>)</code></a> method. </p>
+     <p class="note" role="note">These steps are for consistent behaviour with the <a data-link-type="idl" href="https://encoding.spec.whatwg.org/#textdecoder">TextDecoder</a> <a class="idl-code" data-link-type="method" href="https://encoding.spec.whatwg.org/#dom-textdecoder-decode"><code>decode(<var>input</var>)</code></a> method. </p>
 </ol>
 
 
@@ -235,20 +235,20 @@ byteReadable
     <li>
      <p>Assert: <var>controller</var> . enqueue supports the [[Call]] internal method. </p>
     <li>
-     <p>Convert <var>input</var> to a <a data-link-type="dfn" href="#concept-stream">stream</a>. </p>
+     <p>Convert <var>input</var> to a <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-stream">stream</a>. </p>
     <li>
-     <p>Let <var>output</var> be a new <a data-link-type="dfn" href="#concept-stream">stream</a>. </p>
+     <p>Let <var>output</var> be a new <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-stream">stream</a>. </p>
     <li>
-     <p>Let <var>encoder</var> be <a data-link-type="dfn" href="#utf-8">UTF-8</a>’s <a data-link-type="dfn" href="#encoder">encoder</a>. </p>
+     <p>Let <var>encoder</var> be <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8">UTF-8</a>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#encoder">encoder</a>. </p>
     <li>
      <p>While true, run these substeps: </p>
      <ol>
       <li>
-       <p>Let <var>token</var> be the result of <a data-link-type="dfn" href="#concept-stream-read">reading</a> from <var>input</var>. </p>
+       <p>Let <var>token</var> be the result of <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-stream-read">reading</a> from <var>input</var>. </p>
       <li>
-       <p>Let <var>result</var> be the result of <a data-link-type="dfn" href="#concept-encoding-process">processing</a> <var>token</var> for <var>encoder</var>, <var>input</var>, <var>output</var>. </p>
+       <p>Let <var>result</var> be the result of <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-encoding-process">processing</a> <var>token</var> for <var>encoder</var>, <var>input</var>, <var>output</var>. </p>
       <li>
-       <p>If <var>result</var> is <a data-link-type="dfn" href="#finished">finished</a>, run these substeps: </p>
+       <p>If <var>result</var> is <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#finished">finished</a>, run these substeps: </p>
        <ol>
         <li>
          <p>Convert <var>output</var> into a byte sequence. </p>
