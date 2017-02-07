@@ -15,3 +15,6 @@ fetch(url)
     // stringStream is now a stream of strings.
   });
 ```
+
+The Bikeshed source for these changes can be found at
+https://github.com/ricea/encoding/blob/stream-support/encoding.bs.
