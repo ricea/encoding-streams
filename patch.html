@@ -47,7 +47,7 @@ Standard</a></h1>
     <dd>
      <p>Returns the result of running <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-encoding">encoding</a>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#decoder">decoder</a> on the
   chunks written to <a class="idl-code" data-link-type="attribute" href="#dom-textdecoder-writable">writable</a>. Chunks read from <a class="idl-code" data-link-type="attribute" href="#dom-textdecoder-readable">readable</a> will always be strings. </p>
-    <dt><code><var>encoder</var> . <a class="idl-code" data-link-type="attribute" href="#dom-textdecoder-writable">writable</a></code>
+    <dt><code><var>decoder</var> . <a class="idl-code" data-link-type="attribute" href="#dom-textdecoder-writable">writable</a></code>
     <dd>
      <p>Accepts <a data-link-type="idl" href="https://heycam.github.io/webidl/#BufferSource">BufferSource</a> chunks and runs them through <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-encoding">encoding</a>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#decoder">decoder</a> before making them available to <a class="idl-code" data-link-type="attribute" href="#dom-textdecoder-readable">readable</a>. Typically this will be used via the <a class="idl-code" data-link-type="method">pipeThrough</a> method on a <a data-link-type="idl" href="https://streams.spec.whatwg.org/#rs-class">ReadableStream</a> source. </p>
 <pre class="example" id="example-textdecode-writable"><a class="self-link" href="#example-textdecode-writable"></a>var decoder = new TextDecoder(encoding);
