@@ -148,7 +148,7 @@ a <var>controller</var> runs these steps: </p>
     <li>
      <p>Let <var>result</var> be the result of <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-encoding-process">processing</a> <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#end-of-stream">end-of-stream</a> for <var>dec</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-decoder">decoder</a> and <var>dec</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-stream">stream</a>, <var>output</var>, and <var>dec</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-error-mode">error mode</a>. </p>
     <li>
-     <p>If <var>result</var> is <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#finished">finished</a>, </p>
+     <p>If <var>result</var> is <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#finished">finished</a>, run these substeps:</p>
      <ol>
       <li>
        <p><a data-link-type="dfn" href="https://heycam.github.io/webidl/#invoke-a-callback-function">Invoke</a> the <var>enqueue</var> method of the <var>controller</var> object, passing <var>output</var>, <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-td-serialize">serialized</a>, as the sole argument. </p>
