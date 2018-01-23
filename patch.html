@@ -3,8 +3,67 @@
 <meta content="#3c790a" name="theme-color">
 <title>Changes to the Encoding Standard to support the Stream Standard</title>
 <link href="https://resources.whatwg.org/standard.css" rel="stylesheet">
+  <link href="https://resources.whatwg.org/bikeshed.css" rel="stylesheet">
 <link href="https://resources.whatwg.org/logo-encoding.svg" rel="icon">
-<script defer id="head" src="https://html.spec.whatwg.org/dfn.js"></script>
+<script defer id="head" src="https://resources.whatwg.org/dfn.js"></script>
+<style>/* style-syntax-highlighting */
+pre.idl.highlight { color: #708090; }
+.highlight:not(.idl) { background: hsl(24, 20%, 95%); }
+code.highlight { padding: .1em; border-radius: .3em; }
+pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em 0; overflow: auto; border-radius: 0; }
+.highlight .c { color: #708090 } /* Comment */
+.highlight .k { color: #990055 } /* Keyword */
+.highlight .l { color: #000000 } /* Literal */
+.highlight .n { color: #0077aa } /* Name */
+.highlight .o { color: #999999 } /* Operator */
+.highlight .p { color: #999999 } /* Punctuation */
+.highlight .cm { color: #708090 } /* Comment.Multiline */
+.highlight .cp { color: #708090 } /* Comment.Preproc */
+.highlight .c1 { color: #708090 } /* Comment.Single */
+.highlight .cs { color: #708090 } /* Comment.Special */
+.highlight .kc { color: #990055 } /* Keyword.Constant */
+.highlight .kd { color: #990055 } /* Keyword.Declaration */
+.highlight .kn { color: #990055 } /* Keyword.Namespace */
+.highlight .kp { color: #990055 } /* Keyword.Pseudo */
+.highlight .kr { color: #990055 } /* Keyword.Reserved */
+.highlight .kt { color: #990055 } /* Keyword.Type */
+.highlight .ld { color: #000000 } /* Literal.Date */
+.highlight .m { color: #000000 } /* Literal.Number */
+.highlight .s { color: #a67f59 } /* Literal.String */
+.highlight .na { color: #0077aa } /* Name.Attribute */
+.highlight .nc { color: #0077aa } /* Name.Class */
+.highlight .no { color: #0077aa } /* Name.Constant */
+.highlight .nd { color: #0077aa } /* Name.Decorator */
+.highlight .ni { color: #0077aa } /* Name.Entity */
+.highlight .ne { color: #0077aa } /* Name.Exception */
+.highlight .nf { color: #0077aa } /* Name.Function */
+.highlight .nl { color: #0077aa } /* Name.Label */
+.highlight .nn { color: #0077aa } /* Name.Namespace */
+.highlight .py { color: #0077aa } /* Name.Property */
+.highlight .nt { color: #669900 } /* Name.Tag */
+.highlight .nv { color: #222222 } /* Name.Variable */
+.highlight .ow { color: #999999 } /* Operator.Word */
+.highlight .mb { color: #000000 } /* Literal.Number.Bin */
+.highlight .mf { color: #000000 } /* Literal.Number.Float */
+.highlight .mh { color: #000000 } /* Literal.Number.Hex */
+.highlight .mi { color: #000000 } /* Literal.Number.Integer */
+.highlight .mo { color: #000000 } /* Literal.Number.Oct */
+.highlight .sb { color: #a67f59 } /* Literal.String.Backtick */
+.highlight .sc { color: #a67f59 } /* Literal.String.Char */
+.highlight .sd { color: #a67f59 } /* Literal.String.Doc */
+.highlight .s2 { color: #a67f59 } /* Literal.String.Double */
+.highlight .se { color: #a67f59 } /* Literal.String.Escape */
+.highlight .sh { color: #a67f59 } /* Literal.String.Heredoc */
+.highlight .si { color: #a67f59 } /* Literal.String.Interpol */
+.highlight .sx { color: #a67f59 } /* Literal.String.Other */
+.highlight .sr { color: #a67f59 } /* Literal.String.Regex */
+.highlight .s1 { color: #a67f59 } /* Literal.String.Single */
+.highlight .ss { color: #a67f59 } /* Literal.String.Symbol */
+.highlight .vc { color: #0077aa } /* Name.Variable.Class */
+.highlight .vg { color: #0077aa } /* Name.Variable.Global */
+.highlight .vi { color: #0077aa } /* Name.Variable.Instance */
+.highlight .il { color: #000000 } /* Literal.Number.Integer.Long */
+</style>
 <style>
 .addition {
   font-weight: bold;
@@ -50,10 +109,10 @@ Standard</a></h1>
     <dd>
      <p>Returns a <a data-link-type="dfn" href="https://streams.spec.whatwg.org/#writable-stream" id="ref-for-writable-stream">writable stream</a> which accepts <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#BufferSource" id="ref-for-BufferSource①">BufferSource</a></code> chunks and runs them through <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-encoding" id="ref-for-textdecoder-encoding③">encoding</a>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#decoder" id="ref-for-decoder①②">decoder</a> before making them available to <code class="idl"><a data-link-type="idl" href="#dom-textdecoder-readable" id="ref-for-dom-textdecoder-readable②">readable</a></code>. </p>
      <p>Typically this will be used via the <code class="idl"><a data-link-type="idl" href="https://streams.spec.whatwg.org/#rs-pipe-through" id="ref-for-rs-pipe-through">pipeThrough()</a></code> method on a <code class="idl"><a data-link-type="idl" href="https://streams.spec.whatwg.org/#rs-class" id="ref-for-rs-class①">ReadableStream</a></code> source. </p>
-<pre class="example" id="example-textdecode-writable"><a class="self-link" href="#example-textdecode-writable"></a>var decoder = new TextDecoder(encoding);
+<pre class="example" id="example-textdecode-writable"><a class="self-link" href="#example-textdecode-writable"></a><code class="lang-javascript highlight"><span class="kd">var</span> decoder <span class="o">=</span> <span class="k">new</span> TextDecoder<span class="p">(</span>encoding<span class="p">);</span>
 byteReadable
-  .pipeThrough(decoder)
-  .pipeTo(textWritable);</pre>
+  <span class="p">.</span>pipeThrough<span class="p">(</span>decoder<span class="p">)</span>
+  <span class="p">.</span>pipeTo<span class="p">(</span>textWritable<span class="p">);</span></code></pre>
      <p>If the <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-error-mode" id="ref-for-textdecoder-error-mode①">error mode</a> is "<code>fatal</code>" and <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-encoding" id="ref-for-textdecoder-encoding④">encoding</a>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#decoder" id="ref-for-decoder①③">decoder</a> returns <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#error" id="ref-for-error④">error</a>, both <code class="idl"><a data-link-type="idl" href="#dom-textdecoder-readable" id="ref-for-dom-textdecoder-readable③">readable</a></code> and <code class="idl"><a data-link-type="idl" href="#dom-textdecoder-writable" id="ref-for-dom-textdecoder-writable③">writable</a></code> will be errored with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror">TypeError</a></code>. </p>
 </dl>
 
@@ -75,24 +134,20 @@ byteReadable
 
 <p class="addition">After the description of the ignoreBOM attribute, add:
 
-   <p>The <dfn class="idl-code" data-dfn-for="TextDecoder" data-dfn-type="attribute" data-export="" id="dom-textdecoder-readable"><code>readable</code><a class="self-link" href="#dom-textdecoder-readable"></a></dfn> attribute’s getter must return the
-contents of <a data-link-type="dfn" href="#textdecoder-transform" id="ref-for-textdecoder-transform①">transform</a>’s [[readable]] <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-object-internal-methods-and-internal-slots" id="ref-for-sec-object-internal-methods-and-internal-slots">internal slot</a>. </p>
-   <p>The <dfn class="idl-code" data-dfn-for="TextDecoder" data-dfn-type="attribute" data-export="" id="dom-textdecoder-writable"><code>writable</code><a class="self-link" href="#dom-textdecoder-writable"></a></dfn> attribute’s getter must return the
-contents of <a data-link-type="dfn" href="#textdecoder-transform" id="ref-for-textdecoder-transform②">transform</a>’s [[writable]] <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-object-internal-methods-and-internal-slots" id="ref-for-sec-object-internal-methods-and-internal-slots①">internal slot</a>. </p>
+   <p>The <dfn class="idl-code" data-dfn-for="TextDecoder" data-dfn-type="attribute" data-export="" id="dom-textdecoder-readable"><code>readable</code><a class="self-link" href="#dom-textdecoder-readable"></a></dfn> attribute’s getter must return <a data-link-type="dfn" href="#textdecoder-transform" id="ref-for-textdecoder-transform①">transform</a>.[[readable]]. </p>
+   <p>The <dfn class="idl-code" data-dfn-for="TextDecoder" data-dfn-type="attribute" data-export="" id="dom-textdecoder-writable"><code>writable</code><a class="self-link" href="#dom-textdecoder-writable"></a></dfn> attribute’s getter must return <a data-link-type="dfn" href="#textdecoder-transform" id="ref-for-textdecoder-transform②">transform</a>.[[writable]]. </p>
 
 <p class="addition">At the beginning of the steps for the decode() method, add:
 
   <ol>
     <li>
-     <p>Let <var>readable</var> be <a data-link-type="dfn" href="#textdecoder-transform" id="ref-for-textdecoder-transform③">transform</a>’s [[readable]] <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-object-internal-methods-and-internal-slots" id="ref-for-sec-object-internal-methods-and-internal-slots②">internal
- slot</a>. </p>
+     <p>Let <var>readable</var> be <a data-link-type="dfn" href="#textdecoder-transform" id="ref-for-textdecoder-transform③">transform</a>.[[readable]]. </p>
     <li>
-     <p>If <a data-link-type="abstract-op" href="https://streams.spec.whatwg.org/#is-readable-stream-locked" id="ref-for-is-readable-stream-locked">IsReadableStreamLocked</a>(<var>readable</var>) is true, throw a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror②">TypeError</a></code> exception. </p>
+     <p>If <a data-link-type="abstract-op" href="https://streams.spec.whatwg.org/#is-readable-stream-locked" id="ref-for-is-readable-stream-locked">IsReadableStreamLocked</a>(<var>readable</var>) is true, then throw a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror②">TypeError</a></code> exception. </p>
     <li>
-     <p>Let <var>writable</var> be <a data-link-type="dfn" href="#textdecoder-transform" id="ref-for-textdecoder-transform④">transform</a>’s [[writable]] <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-object-internal-methods-and-internal-slots" id="ref-for-sec-object-internal-methods-and-internal-slots③">internal
- slot</a>. </p>
+     <p>Let <var>writable</var> be <a data-link-type="dfn" href="#textdecoder-transform" id="ref-for-textdecoder-transform④">transform</a>.[[writable]]. </p>
     <li>
-     <p>If <a data-link-type="abstract-op" href="https://streams.spec.whatwg.org/#is-writable-stream-locked" id="ref-for-is-writable-stream-locked">IsWritableStreamLocked</a>(<var>writable</var>) is true, throw a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror③">TypeError</a></code> exception. </p>
+     <p>If <a data-link-type="abstract-op" href="https://streams.spec.whatwg.org/#is-writable-stream-locked" id="ref-for-is-writable-stream-locked">IsWritableStreamLocked</a>(<var>writable</var>) is true, then throw a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror③">TypeError</a></code> exception. </p>
      <p class="note" role="note">These steps ensure that the state of the <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#decoder">decoder</a> is not simultaneously modified by
  the Streams API and this method. </p>
 </ol>
@@ -102,9 +157,10 @@ contents of <a data-link-type="dfn" href="#textdecoder-transform" id="ref-for-te
    <p>The <dfn data-dfn-type="dfn" data-noexport="" id="concept-td-decode-and-enqueue">decode and enqueue a chunk<a class="self-link" href="#concept-td-decode-and-enqueue"></a></dfn> algorithm, given a <code class="idl"><a data-link-type="idl" href="https://encoding.spec.whatwg.org/#textdecoder" id="ref-for-textdecoder⑤">TextDecoder</a></code> <var>dec</var> and a <var>chunk</var>, runs these steps: </p>
    <ol>
     <li>
-      <p>If the <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values" id="ref-for-sec-ecmascript-data-types-and-values">type</a> of of <var>chunk</var> is not Object, or <var>chunk</var> does not have
- an [[ArrayBufferData]] <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-object-internal-methods-and-internal-slots" id="ref-for-sec-object-internal-methods-and-internal-slots">internal slot</a>, or <a data-link-type="abstract-op" href="https://tc39.github.io/ecma262/#sec-isdetachedbuffer" id="ref-for-sec-isdetachedbuffer">IsDetachedBuffer</a>(<var>chunk</var>) is true, or <a data-link-type="abstract-op" href="https://tc39.github.io/ecma262/#sec-issharedarraybuffer" id="ref-for-sec-issharedarraybuffer">IsSharedArrayBuffer</a>(<var>chunk</var>) is true then return <a data-link-type="dfn" href="https://www.w3.org/2001/tag/doc/promises-guide/#a-promise-rejected-with" id="ref-for-a-promise-rejected-with">a promise rejected
- with</a> a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror⑤">TypeError</a></code>. </p>
+     <p>If <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values" id="ref-for-sec-ecmascript-data-types-and-values">Type</a>(<var>chunk</var>) is not Object, or <var>chunk</var> does not have an
+ [[ArrayBufferData]] internal slot, or <a data-link-type="abstract-op" href="https://tc39.github.io/ecma262/#sec-isdetachedbuffer" id="ref-for-sec-isdetachedbuffer">IsDetachedBuffer</a>(<var>chunk</var>) is
+ true, or <a data-link-type="abstract-op" href="https://tc39.github.io/ecma262/#sec-issharedarraybuffer" id="ref-for-sec-issharedarraybuffer">IsSharedArrayBuffer</a>(<var>chunk</var>) is true, then return a new
+ promise rejected with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror⑤">TypeError</a></code> exception. </p>
     <li>
      <p>If the <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-do-not-flush-flag">do not flush flag</a> for <var>dec</var> is unset, set <var>dec’s</var> <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-decoder">decoder</a> to a new <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#decoder">decoder</a> for <var>dec</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-encoding">encoding</a>, set <var>dec</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-stream">stream</a> to a new <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-stream">stream</a>, and unset <var>dec</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-bom-seen-flag">BOM seen flag</a>. </p>
     <li>
@@ -112,29 +168,28 @@ contents of <a data-link-type="dfn" href="#textdecoder-transform" id="ref-for-te
     <li>
      <p><a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-stream-push">Push</a> a <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-get-buffer-source-copy">copy of</a> <var>chunk</var> to <var>dec</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-stream">stream</a>. </p>
     <li>
-     <p>Let <var>controller</var> be <var>dec</var>’s <a data-link-type="dfn" href="#textdecoder-transform" id="ref-for-textdecoder-transform⑤">transform</a>’s
- [[transformStreamController]] <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-object-internal-methods-and-internal-slots" id="ref-for-sec-object-internal-methods-and-internal-slots①">internal slot</a>. </p>
+     <p>Let <var>controller</var> be <var>dec</var>’s <a data-link-type="dfn" href="#textdecoder-transform" id="ref-for-textdecoder-transform⑤">transform</a>.[[transformStreamController]]. </p>
     <li>
       <p>Let <var>output</var> be a new <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-stream">stream</a>. </p>
     <li>
-     <p>While true, run these substeps: </p>
+     <p>While true, run these steps: </p>
      <ol>
       <li>
        <p>Let <var>token</var> be the result of <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-stream-read">reading</a> from <var>dec</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-stream">stream</a>. </p>
       <li>
-       <p>If <var>token</var> is <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#end-of-stream">end-of-stream</a>, run these substeps: </p>
+       <p>If <var>token</var> is <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#end-of-stream">end-of-stream</a>, run these steps: </p>
        <ol>
         <li>
         <p>Let <var>outputChunk</var> be <var>output</var>, <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-td-serialize" id="ref-for-concept-td-serialize②">serialized</a>. </p>
         <li>
          <p>Call <a data-link-type="abstract-op" href="https://streams.spec.whatwg.org/#transform-stream-default-controller-enqueue" id="ref-for-transform-stream-default-controller-enqueue">TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>, <var>outputChunk</var>). </p>
         <li>
-         <p>Return <a data-link-type="dfn" href="https://www.w3.org/2001/tag/doc/promises-guide/#a-promise-resolved-with" id="ref-for-a-promise-resolved-with">a promise resolved with</a> undefined. </p>
+         <p>Return a new promise resolved with undefined. </p>
        </ol>
       <li>
        <p>Let <var>result</var> be the result of <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-encoding-process">processing</a> <var>token</var> for <var>dec</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-decoder">decoder</a>, <var>dec</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-stream">stream</a>, <var>output</var>, and <var>dec’s</var> <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-error-mode">error mode</a>. </p>
       <li>
-       <p>If <var>result</var> is <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#error" id="ref-for-error⑦">error</a>, return <a data-link-type="dfn" href="https://www.w3.org/2001/tag/doc/promises-guide/#a-promise-rejected-with" id="ref-for-a-promise-rejected-with①">a promise rejected with</a> a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror⑥">TypeError</a></code> exception. </p>
+       <p>If <var>result</var> is <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#error" id="ref-for-error⑦">error</a>, return a new promise rejected with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror⑥">TypeError</a></code> exception. </p>
      </ol>
    </ol>
    <p>The <dfn data-dfn-type="dfn" data-noexport="" id="concept-td-flush-and-enqueue">flush and enqueue<a class="self-link" href="#concept-td-flush-and-enqueue"></a></dfn> algorithm, which handles the end
@@ -149,20 +204,19 @@ of data from the input <code class="idl"><a data-link-type="idl" href="https://s
     <li>
      <p>Let <var>result</var> be the result of <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-encoding-process">processing</a> <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#end-of-stream">end-of-stream</a> for <var>dec</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-decoder">decoder</a> and <var>dec</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-stream">stream</a>, <var>output</var>, and <var>dec</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-error-mode">error mode</a>. </p>
     <li>
-     <p>If <var>result</var> is <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#finished">finished</a>, run these substeps:</p>
+     <p>If <var>result</var> is <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#finished">finished</a>, run these steps:</p>
      <ol>
       <li>
        <p>Let <var>outputChunk</var> be <var>output</var>, <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-td-serialize" id="ref-for-concept-td-serialize③">serialized</a>. </p>
       <li>
-       <p>Let <var>controller</var> be <var>dec</var>’s <a data-link-type="dfn" href="#textdecoder-transform" id="ref-for-textdecoder-transform⑥">transform</a>’s
-  [[transformStreamController]] <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-object-internal-methods-and-internal-slots" id="ref-for-sec-object-internal-methods-and-internal-slots②">internal slot</a>. </p>
+       <p>Let <var>controller</var> be <var>dec</var>’s <a data-link-type="dfn" href="#textdecoder-transform" id="ref-for-textdecoder-transform⑥">transform</a>.[[transformStreamController]]. </p>
       <li>
-        <p>Call <a data-link-type="abstract-op" href="https://streams.spec.whatwg.org/#transform-stream-default-controller-enqueue" id="ref-for-transform-stream-default-controller-enqueue①">TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>, <var>outputChunk</var>). </p>
+       <p>Call <a data-link-type="abstract-op" href="https://streams.spec.whatwg.org/#transform-stream-default-controller-enqueue" id="ref-for-transform-stream-default-controller-enqueue①">TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>, <var>outputChunk</var>). </p>
       <li>
-       <p>Return <a data-link-type="dfn" href="https://www.w3.org/2001/tag/doc/promises-guide/#a-promise-resolved-with" id="ref-for-a-promise-resolved-with①">a promise resolved with</a> undefined. </p>
+       <p>Return a new promise resolved with undefined. </p>
      </ol>
     <li>
-     <p>Otherwise, return <a data-link-type="dfn" href="https://www.w3.org/2001/tag/doc/promises-guide/#a-promise-rejected-with" id="ref-for-a-promise-rejected-with②">a promise rejected with</a> a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror⑦">TypeError</a></code>. </p>
+     <p>Otherwise, return a new promise rejected with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror⑦">TypeError</a></code> exception. </p>
    </ol>
 
 <h3>In 8.2 Interface <code title="">TextEncoder</code>, add:</h3>
@@ -189,9 +243,9 @@ surrogate<a class="self-link" href="#textencoder-pending-high-surrogate"></a></d
     <dd>
      <p>Returns a <a data-link-type="dfn" href="https://streams.spec.whatwg.org/#writable-stream" id="ref-for-writable-stream①">writable stream</a> which accepts string chunks and runs them through <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8" id="ref-for-utf-8①⑥">UTF-8</a>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#encoder" id="ref-for-encoder①⓪">encoder</a> before making them available to <code class="idl"><a data-link-type="idl" href="#dom-textencoder-readable" id="ref-for-dom-textencoder-readable②">readable</a></code>. </p>
      <p>Typically this will be used via the <code class="idl"><a data-link-type="idl" href="https://streams.spec.whatwg.org/#rs-pipe-through" id="ref-for-rs-pipe-through①">pipeThrough()</a></code> method on a <code class="idl"><a data-link-type="idl" href="https://streams.spec.whatwg.org/#rs-class" id="ref-for-rs-class④">ReadableStream</a></code> source. </p>
-<pre class="example" id="example-textencode-writable"><a class="self-link" href="#example-textencode-writable"></a>textReadable
-  .pipeThrough(new TextEncoder())
-  .pipeTo(byteWritable);</pre>
+<pre class="example" id="example-textencode-writable"><a class="self-link" href="#example-textencode-writable"></a><code class="lang-javascript highlight">textReadable
+  <span class="p">.</span>pipeThrough<span class="p">(</span><span class="k">new</span> TextEncoder<span class="p">())</span>
+  <span class="p">.</span>pipeTo<span class="p">(</span>byteWritable<span class="p">);</span></code></pre>
 </dl>
 
 <p class="addition">To the <dfn class="idl-code" data-dfn-for="TextEncoder" data-dfn-type="constructor" data-export="" id="dom-textencoder"><code>TextEncoder()</code><a class="self-link" href="#dom-textencoder"></a></dfn> constructor steps, before the final step, add:
@@ -212,23 +266,19 @@ surrogate<a class="self-link" href="#textencoder-pending-high-surrogate"></a></d
 
 <p class="addition">After the description of the encoding attribute, add:
 
-   <p>The <dfn class="idl-code" data-dfn-for="TextEncoder" data-dfn-type="attribute" data-export="" id="dom-textencoder-readable"><code>readable</code><a class="self-link" href="#dom-textencoder-readable"></a></dfn> attribute’s getter must return the
-contents of <a data-link-type="dfn" href="#textencoder-transform" id="ref-for-textencoder-transform①">transform</a>’s [[readable]] <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-object-internal-methods-and-internal-slots" id="ref-for-sec-object-internal-methods-and-internal-slots⑦">internal slot</a>. </p>
-   <p>The <dfn class="idl-code" data-dfn-for="TextEncoder" data-dfn-type="attribute" data-export="" id="dom-textencoder-writable"><code>writable</code><a class="self-link" href="#dom-textencoder-writable"></a></dfn> attribute’s getter must return the
-contents of <a data-link-type="dfn" href="#textencoder-transform" id="ref-for-textencoder-transform②">transform</a>’s [[writable]] <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-object-internal-methods-and-internal-slots" id="ref-for-sec-object-internal-methods-and-internal-slots⑧">internal slot</a>. </p>
-
-<p class="addition">At the beginning of the steps for the encode() method, add:
-  <ol>
+   <p>The <dfn class="idl-code" data-dfn-for="TextEncoder" data-dfn-type="attribute" data-export="" id="dom-textencoder-readable"><code>readable</code><a class="self-link" href="#dom-textencoder-readable"></a></dfn> attribute’s getter must return <a data-link-type="dfn" href="#textencoder-transform" id="ref-for-textencoder-transform①">transform</a>.[[readable]]. </p>
+   <p>The <dfn class="idl-code" data-dfn-for="TextEncoder" data-dfn-type="attribute" data-export="" id="dom-textencoder-writable"><code>writable</code><a class="self-link" href="#dom-textencoder-writable"></a></dfn> attribute’s getter must return <a data-link-type="dfn" href="#textencoder-transform" id="ref-for-textencoder-transform②">transform</a>.[[writable]]. </p>
+   <p>The <dfn class="idl-code" data-dfn-for="TextEncoder" data-dfn-type="method" data-export="" data-lt="encode(input)|encode()" id="dom-textencoder-encode"><code>encode(<var>input</var>)</code><a class="self-link" href="#dom-textencoder-encode"></a></dfn> method, when invoked,
+must run these steps: </p>
+   <ol>
     <li>
-     <p>Let <var>readable</var> be <a data-link-type="dfn" href="#textencoder-transform" id="ref-for-textencoder-transform③">transform</a>’s [[readable]] <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-object-internal-methods-and-internal-slots" id="ref-for-sec-object-internal-methods-and-internal-slots⑨">internal
- slot</a>. </p>
+     <p>Let <var>readable</var> be <a data-link-type="dfn" href="#textencoder-transform" id="ref-for-textencoder-transform③">transform</a>.[[readable]]. </p>
     <li>
-     <p>If <a data-link-type="abstract-op" href="https://streams.spec.whatwg.org/#is-readable-stream-locked" id="ref-for-is-readable-stream-locked①">IsReadableStreamLocked</a>(<var>readable</var>) is true, throw a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror⑧">TypeError</a></code> exception. </p>
+     <p>If <a data-link-type="abstract-op" href="https://streams.spec.whatwg.org/#is-readable-stream-locked" id="ref-for-is-readable-stream-locked①">IsReadableStreamLocked</a>(<var>readable</var>) is true, then throw a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror⑧">TypeError</a></code> exception. </p>
     <li>
-     <p>Let <var>writable</var> be <a data-link-type="dfn" href="#textencoder-transform" id="ref-for-textencoder-transform④">transform</a>’s [[writable]] <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-object-internal-methods-and-internal-slots" id="ref-for-sec-object-internal-methods-and-internal-slots①⓪">internal
- slot</a>. </p>
+     <p>Let <var>writable</var> be <a data-link-type="dfn" href="#textencoder-transform" id="ref-for-textencoder-transform④">transform</a>.[[writable]]. </p>
     <li>
-     <p>If <a data-link-type="abstract-op" href="https://streams.spec.whatwg.org/#is-writable-stream-locked" id="ref-for-is-writable-stream-locked①">IsWritableStreamLocked</a>(<var>writable</var>) is true, throw a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror⑨">TypeError</a></code> exception. </p>
+     <p>If <a data-link-type="abstract-op" href="https://streams.spec.whatwg.org/#is-writable-stream-locked" id="ref-for-is-writable-stream-locked①">IsWritableStreamLocked</a>(<var>writable</var>) is true, then throw a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror⑨">TypeError</a></code> exception. </p>
      <p class="note" role="note">These steps are for consistent behaviour with the <code class="idl"><a data-link-type="idl" href="https://encoding.spec.whatwg.org/#textdecoder" id="ref-for-textdecoder⑦">TextDecoder</a></code> <a class="idl-code" data-link-type="method" href="https://encoding.spec.whatwg.org/#dom-textdecoder-decode" id="ref-for-dom-textdecoder-decode③"><code>decode(<var>input</var>)</code></a> method. </p>
 </ol>
 
@@ -247,33 +297,33 @@ contents of <a data-link-type="dfn" href="#textencoder-transform" id="ref-for-te
     <li>
      <p>Let <var>encoder</var> be <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8" id="ref-for-utf-8②⓪">UTF-8</a>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#encoder" id="ref-for-encoder①③">encoder</a>. </p>
     <li>
-     <p>Let <var>controller</var> be <var>enc</var>’s <a data-link-type="dfn" href="#textencoder-transform" id="ref-for-textencoder-transform⑤">transform</a>’s
- [[transformStreamController]] <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-object-internal-methods-and-internal-slots" id="ref-for-sec-object-internal-methods-and-internal-slots①①">internal slot</a>. </p>
+     <p>Let <var>controller</var> be <var>enc</var>’s <a data-link-type="dfn" href="#textencoder-transform" id="ref-for-textencoder-transform⑤">transform</a>.[[transformStreamController]]. </p>
     <li>
-     <p>While true, run these substeps: </p>
+     <p>While true, run these steps: </p>
      <ol>
       <li>
        <p>Let <var>token</var> be the result of <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-stream-read" id="ref-for-concept-stream-read⑧">reading</a> from <var>input</var>. </p>
       <li>
-       <p>If <var>token</var> is <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#end-of-stream" id="ref-for-end-of-stream⑧">end-of-stream</a> then run these substeps: </p>
+       <p>If <var>token</var> is <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#end-of-stream" id="ref-for-end-of-stream⑧">end-of-stream</a>, then run these steps: </p>
        <ol>
         <li>
          <p>Convert <var>output</var> into a byte sequence. </p>
         <li>
          <p>Call <a data-link-type="abstract-op" href="https://streams.spec.whatwg.org/#transform-stream-default-controller-enqueue" id="ref-for-transform-stream-default-controller-enqueue②">TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>, <var>output</var>). </p>
         <li>
-         <p>Return <a data-link-type="dfn" href="https://www.w3.org/2001/tag/doc/promises-guide/#a-promise-resolved-with" id="ref-for-a-promise-resolved-with②">a promise resolved with</a> undefined. </p>
+         <p>Return a new promise resolved with undefined. </p>
        </ol>
       <li>
-       <p>Let <var>result</var> by the result of executing the <a data-link-type="dfn" href="#concept-te-convert-code-unit-to-scalar-value" id="ref-for-concept-te-convert-code-unit-to-scalar-value">convert code unit to scalar value</a> algorithm with <var>enc</var> and <var>token</var>. </p>
+       <p>Let <var>result</var> be the result of executing the <a data-link-type="dfn" href="#concept-te-convert-code-unit-to-scalar-value" id="ref-for-concept-te-convert-code-unit-to-scalar-value">convert code unit to scalar value</a> algorithm with <var>enc</var>, <var>token</var> and <var>input</var>. </p>
       <li>
        <p>If <var>result</var> is not <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#continue" id="ref-for-continue③">continue</a>, <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-encoding-process" id="ref-for-concept-encoding-process⑤">process</a> <var>result</var> for <var>encoder</var>, <var>input</var>, <var>output</var>. </p>
      </ol>
    </ol>
-   <p>The <dfn data-dfn-type="dfn" data-noexport="" id="concept-te-convert-code-unit-to-scalar-value">convert code unit to scalar value<a class="self-link" href="#concept-te-convert-code-unit-to-scalar-value"></a></dfn> algorithm, given a <code class="idl"><a data-link-type="idl" href="https://encoding.spec.whatwg.org/#textencoder" id="ref-for-textencoder⑦">TextEncoder</a></code> <var>enc</var> and <var>token</var>, runs these steps: </p>
+   <p>The <dfn data-dfn-type="dfn" data-noexport="" id="concept-te-convert-code-unit-to-scalar-value">convert code unit to scalar value<a class="self-link" href="#concept-te-convert-code-unit-to-scalar-value"></a></dfn> algorithm, given a <code class="idl"><a data-link-type="idl" href="https://encoding.spec.whatwg.org/#textencoder" id="ref-for-textencoder⑦">TextEncoder</a></code> <var>enc</var>, <var>token</var> and <var>input</var> stream,
+runs these steps: </p>
    <ol>
     <li>
-     <p>If <var>enc</var>’s <a data-link-type="dfn" href="#textencoder-pending-high-surrogate" id="ref-for-textencoder-pending-high-surrogate">pending high surrogate</a> is set, run these substeps: </p>
+     <p>If <var>enc</var>’s <a data-link-type="dfn" href="#textencoder-pending-high-surrogate" id="ref-for-textencoder-pending-high-surrogate">pending high surrogate</a> is set, run these steps: </p>
      <ol>
       <li>
        <p>Let <var>high surrogate</var> be <var>enc</var>’s <a data-link-type="dfn" href="#textencoder-pending-high-surrogate" id="ref-for-textencoder-pending-high-surrogate①">pending high surrogate</a>. </p>
@@ -282,6 +332,8 @@ contents of <a data-link-type="dfn" href="#textencoder-transform" id="ref-for-te
       <li>
        <p>If <var>token</var> is in the range U+DC00 to U+DFFF, inclusive, return a code point whose
   value is 0x10000 + ((<var>high surrogate</var> − 0xD800) &lt;&lt; 10) + (<var>token</var> − 0xDC00). </p>
+      <li>
+       <p><a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-stream-prepend" id="ref-for-concept-stream-prepend④">Prepend</a> <var>token</var> to <var>input</var>. </p>
       <li>
        <p>Return U+FFFD. </p>
      </ol>
@@ -299,7 +351,7 @@ strings. </p>
    <p>The <dfn data-dfn-type="dfn" data-noexport="" id="concept-te-encode-and-flush">encode and flush<a class="self-link" href="#concept-te-encode-and-flush"></a></dfn> algorithm, given a <code class="idl"><a data-link-type="idl" href="https://encoding.spec.whatwg.org/#textencoder" id="ref-for-textencoder⑧">TextEncoder</a></code> <var>enc</var>, runs these steps: </p>
    <ol>
     <li>
-     <p>If <var>enc</var>’s <a data-link-type="dfn" href="#textencoder-pending-high-surrogate" id="ref-for-textencoder-pending-high-surrogate④">pending high surrogate</a> is set, run these substeps: </p>
+     <p>If <var>enc</var>’s <a data-link-type="dfn" href="#textencoder-pending-high-surrogate" id="ref-for-textencoder-pending-high-surrogate④">pending high surrogate</a> is set, run these steps: </p>
      <ol>
       <li>
        <p>Unset <var>enc</var>’s <a data-link-type="dfn" href="#textencoder-pending-high-surrogate" id="ref-for-textencoder-pending-high-surrogate⑤">pending high surrogate</a> </p>
@@ -310,8 +362,7 @@ strings. </p>
       <li>
        <p>Let <var>encoder</var> be <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8" id="ref-for-utf-8②①">UTF-8</a>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#encoder" id="ref-for-encoder①④">encoder</a>. </p>
       <li>
-       <p>Let <var>controller</var> be <var>enc</var>’s <a data-link-type="dfn" href="#textencoder-transform" id="ref-for-textencoder-transform⑥">transform</a>’s
-  [[transformStreamController]] <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-object-internal-methods-and-internal-slots" id="ref-for-sec-object-internal-methods-and-internal-slots①②">internal slot</a>. </p>
+       <p>Let <var>controller</var> be <var>enc</var>’s <a data-link-type="dfn" href="#textencoder-transform" id="ref-for-textencoder-transform⑥">transform</a>.[[transformStreamController]]. </p>
       <li>
        <p>Let <var>token</var> be U+FFFD. </p>
       <li>
@@ -322,5 +373,5 @@ strings. </p>
        <p>Call <a data-link-type="abstract-op" href="https://streams.spec.whatwg.org/#transform-stream-default-controller-enqueue" id="ref-for-transform-stream-default-controller-enqueue③">TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>, <var>output</var>). </p>
      </ol>
     <li>
-     <p>Return <a data-link-type="dfn" href="https://www.w3.org/2001/tag/doc/promises-guide/#a-promise-resolved-with" id="ref-for-a-promise-resolved-with③">a promise resolved with</a> undefined. </p>
+     <p>Return a new promise resolved with undefined. </p>
    </ol>
