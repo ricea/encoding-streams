@@ -97,7 +97,7 @@ Standard</a></h1>
 
 <p class="addition">to the TextDecoder interface.
 
-<p class="addition">In the paragraph following the IDL, insert ", and <dfn data-dfn-for="TextDecoder" data-dfn-type="dfn" data-noexport="" id="textdecoder-transform">transform<a class="self-link" href="#textdecoder-transform"></a></dfn> (a <code class="idl"><a data-link-type="idl" href="https://streams.spec.whatwg.org/#ts-class" id="ref-for-ts-class">TransformStream</a></code> object)." at the end of the sentence.
+<p class="addition">In the paragraph following the IDL, insert ", and <dfn data-dfn-for="TextDecoder" data-dfn-type="dfn" data-noexport="" id="textdecoder-transform">transform<a class="self-link" href="#textdecoder-transform"></a></dfn>." at the end of the sentence.
 
 <p class="addition">To the DOM intro note, add
 
@@ -118,18 +118,32 @@ byteReadable
 
 <p class="addition">To the <dfn class="idl-code" data-dfn-for="TextDecoder" data-dfn-type="constructor" data-export="" id="dom-textdecoder"><code>TextDecoder(<var>label</var>, <var>options</var>)</code><a class="self-link" href="#dom-textdecoder"></a></dfn> constructor steps, before the final step, add:
 <ol start="7">
-      <li>
+     <li>
+       <p>Let <var>decForTransform</var> be a new <code class="idl"><a data-link-type="idl" href="https://encoding.spec.whatwg.org/#textdecoder" id="ref-for-textdecoder⑤">TextDecoder</a></code> object. </p>
+    <li>
+     <p>Set <var>decForTransform</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-encoding" id="ref-for-textdecoder-encoding⑧">encoding</a> to <var>encoding</var>. </p>
+    <li>
+     <p>Set <var>decForTransform</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-error-mode" id="ref-for-textdecoder-error-mode④">error mode</a> to <var>dec</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-error-mode" id="ref-for-textdecoder-error-mode⑤">error mode</a>. </p>
+    <li>
+     <p>Set <var>decForTransform</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-ignore-bom-flag" id="ref-for-textdecoder-ignore-bom-flag③">ignore BOM flag</a> to <var>dec</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-ignore-bom-flag" id="ref-for-textdecoder-ignore-bom-flag④">ignore BOM flag</a>. </p>
+    <li>
+     <p>Set <var>decForTransform</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-decoder" id="ref-for-textdecoder-decoder">decoder</a> to a new <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#decoder" id="ref-for-decoder①⑥">decoder</a> for <var>decForTransform</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-encoding" id="ref-for-textdecoder-encoding⑨">encoding</a>, and set <var>decForTransform</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-stream" id="ref-for-textdecoder-stream">stream</a> to a new <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-stream" id="ref-for-concept-stream①④">stream</a>. </p>
+     <p class="note" role="note">For simplicity, <var>dec</var> and <var>decForTransform</var> have redundant
+  members. However, the <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-bom-seen-flag" id="ref-for-textdecoder-bom-seen-flag③">BOM seen flag</a>, <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-do-not-flush-flag" id="ref-for-textdecoder-do-not-flush-flag">do not flush
+  flag</a>, and <a data-link-type="dfn" href="#textdecoder-transform" id="ref-for-textdecoder-transform">transform</a> are unused in <var>decForTransform</var>, and <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-encoding" id="ref-for-textdecoder-encoding①⓪">encoding</a>, <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-ignore-bom-flag" id="ref-for-textdecoder-ignore-bom-flag⑤">ignore BOM flag</a> and <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-error-mode" id="ref-for-textdecoder-error-mode⑥">error mode</a> are identical to <var>dec</var>. It is not necessary for
+  implementations to duplicate these member fields. </p>
+    <li>
      <p>Let <var>startAlgorithm</var> be an algorithm that takes no arguments and returns nothing. </p>
     <li>
      <p>Let <var>transformAlgorithm</var> be an algorithm which takes a <var>chunk</var> argument
- and runs the <a data-link-type="dfn" href="#concept-td-decode-and-enqueue" id="ref-for-concept-td-decode-and-enqueue">decode and enqueue a chunk</a> algorithm with <var>dec</var> and <var>chunk</var>. </p>
+ and runs the <a data-link-type="dfn" href="#concept-td-decode-and-enqueue" id="ref-for-concept-td-decode-and-enqueue">decode and enqueue a chunk</a> algorithm with <var>decForTransform</var> and <var>chunk</var>. </p>
     <li>
      <p>Let <var>flushAlgorithm</var> be an algorithm which takes no arguments and runs the <a data-link-type="dfn" href="#concept-td-flush-and-enqueue" id="ref-for-concept-td-flush-and-enqueue">flush
- and enqueue</a> algorithm with <var>dec</var>. </p>
+ and enqueue</a> algorithm with <var>decForTransform</var>. </p>
     <li>
      <p>Let <var>transform</var> be the result of calling <a data-link-type="abstract-op" href="https://streams.spec.whatwg.org/#create-transform-stream" id="ref-for-create-transform-stream">CreateTransformStream</a>(<var>startAlgorithm</var>, <var>transformAlgorithm</var>, <var>flushAlgorithm</var>). </p>
     <li>
-     <p>Set <var>dec</var>’s <a data-link-type="dfn" href="#textdecoder-transform">transform</a> to <var>transform</var>. </p>
+     <p>Set <var>dec</var>’s <a data-link-type="dfn" href="#textdecoder-transform" id="ref-for-textdecoder-transform①">transform</a> to <var>transform</var>. </p>
 </ol>
 
 <p class="addition">After the description of the ignoreBOM attribute, add:
@@ -137,86 +151,64 @@ byteReadable
    <p>The <dfn class="idl-code" data-dfn-for="TextDecoder" data-dfn-type="attribute" data-export="" id="dom-textdecoder-readable"><code>readable</code><a class="self-link" href="#dom-textdecoder-readable"></a></dfn> attribute’s getter must return <a data-link-type="dfn" href="#textdecoder-transform" id="ref-for-textdecoder-transform①">transform</a>.[[readable]]. </p>
    <p>The <dfn class="idl-code" data-dfn-for="TextDecoder" data-dfn-type="attribute" data-export="" id="dom-textdecoder-writable"><code>writable</code><a class="self-link" href="#dom-textdecoder-writable"></a></dfn> attribute’s getter must return <a data-link-type="dfn" href="#textdecoder-transform" id="ref-for-textdecoder-transform②">transform</a>.[[writable]]. </p>
 
-<p class="addition">At the beginning of the steps for the decode() method, add:
-
-  <ol>
-    <li>
-     <p>Let <var>readable</var> be <a data-link-type="dfn" href="#textdecoder-transform" id="ref-for-textdecoder-transform③">transform</a>.[[readable]]. </p>
-    <li>
-     <p>If <a data-link-type="abstract-op" href="https://streams.spec.whatwg.org/#is-readable-stream-locked" id="ref-for-is-readable-stream-locked">IsReadableStreamLocked</a>(<var>readable</var>) is true, then throw a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror②">TypeError</a></code> exception. </p>
-    <li>
-     <p>Let <var>writable</var> be <a data-link-type="dfn" href="#textdecoder-transform" id="ref-for-textdecoder-transform④">transform</a>.[[writable]]. </p>
-    <li>
-     <p>If <a data-link-type="abstract-op" href="https://streams.spec.whatwg.org/#is-writable-stream-locked" id="ref-for-is-writable-stream-locked">IsWritableStreamLocked</a>(<var>writable</var>) is true, then throw a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror③">TypeError</a></code> exception. </p>
-     <p class="note" role="note">These steps ensure that the state of the <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#decoder">decoder</a> is not simultaneously modified by
- the Streams API and this method. </p>
-</ol>
-
 <p class="addition">After the definition of the decode() method, add:
 
-   <p>The <dfn data-dfn-type="dfn" data-noexport="" id="concept-td-decode-and-enqueue">decode and enqueue a chunk<a class="self-link" href="#concept-td-decode-and-enqueue"></a></dfn> algorithm, given a <code class="idl"><a data-link-type="idl" href="https://encoding.spec.whatwg.org/#textdecoder" id="ref-for-textdecoder⑤">TextDecoder</a></code> <var>dec</var> and a <var>chunk</var>, runs these steps: </p>
+   <p>The <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="concept-td-decode-and-enqueue">decode and enqueue a chunk</dfn> algorithm, given a <code class="idl"><a data-link-type="idl" href="https://encoding.spec.whatwg.org/#textdecoder" id="ref-for-textdecoder⑥">TextDecoder</a></code> <var>decForTransform</var> and a <var>chunk</var>, runs these steps: </p>
    <ol>
     <li>
      <p>If <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values" id="ref-for-sec-ecmascript-data-types-and-values">Type</a>(<var>chunk</var>) is not Object, or <var>chunk</var> does not have an
  [[ArrayBufferData]] internal slot, or <a data-link-type="abstract-op" href="https://tc39.github.io/ecma262/#sec-isdetachedbuffer" id="ref-for-sec-isdetachedbuffer">IsDetachedBuffer</a>(<var>chunk</var>) is
  true, or <a data-link-type="abstract-op" href="https://tc39.github.io/ecma262/#sec-issharedarraybuffer" id="ref-for-sec-issharedarraybuffer">IsSharedArrayBuffer</a>(<var>chunk</var>) is true, then return a new
- promise rejected with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror⑤">TypeError</a></code> exception. </p>
+ promise rejected with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror③">TypeError</a></code> exception. </p>
     <li>
-     <p>If the <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-do-not-flush-flag">do not flush flag</a> for <var>dec</var> is unset, set <var>dec’s</var> <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-decoder">decoder</a> to a new <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#decoder">decoder</a> for <var>dec</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-encoding">encoding</a>, set <var>dec</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-stream">stream</a> to a new <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-stream">stream</a>, and unset <var>dec</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-bom-seen-flag">BOM seen flag</a>. </p>
+     <p><a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-stream-push" id="ref-for-concept-stream-push③">Push</a> a <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-get-buffer-source-copy" id="ref-for-dfn-get-buffer-source-copy①">copy of</a> <var>chunk</var> to <var>decForTransform</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-stream" id="ref-for-textdecoder-stream⑤">stream</a>. </p>
     <li>
-     <p>Set <var>dec</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-do-not-flush-flag">do not flush flag</a>. </p>
+     <p>Let <var>controller</var> be <var>decForTransform</var>’s <a data-link-type="dfn" href="#textdecoder-transform" id="ref-for-textdecoder-transform④">transform</a>.[[transformStreamController]]. </p>
     <li>
-     <p><a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-stream-push">Push</a> a <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-get-buffer-source-copy">copy of</a> <var>chunk</var> to <var>dec</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-stream">stream</a>. </p>
-    <li>
-     <p>Let <var>controller</var> be <var>dec</var>’s <a data-link-type="dfn" href="#textdecoder-transform" id="ref-for-textdecoder-transform⑤">transform</a>.[[transformStreamController]]. </p>
-    <li>
-      <p>Let <var>output</var> be a new <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-stream">stream</a>. </p>
+     <p>Let <var>output</var> be a new <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-stream" id="ref-for-concept-stream①⑦">stream</a>. </p>
     <li>
      <p>While true, run these steps: </p>
      <ol>
       <li>
-       <p>Let <var>token</var> be the result of <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-stream-read">reading</a> from <var>dec</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-stream">stream</a>. </p>
+       <p>Let <var>token</var> be the result of <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-stream-read" id="ref-for-concept-stream-read⑥">reading</a> from <var>decForTransform</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-stream" id="ref-for-textdecoder-stream⑥">stream</a>. </p>
       <li>
-       <p>If <var>token</var> is <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#end-of-stream">end-of-stream</a>, run these steps: </p>
+       <p>If <var>token</var> is <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#end-of-stream" id="ref-for-end-of-stream⑥">end-of-stream</a>, then run these steps: </p>
        <ol>
         <li>
-        <p>Let <var>outputChunk</var> be <var>output</var>, <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-td-serialize" id="ref-for-concept-td-serialize②">serialized</a>. </p>
+         <p>Let <var>outputChunk</var> be <var>output</var>, <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-td-serialize" id="ref-for-concept-td-serialize②">serialized</a>. </p>
         <li>
          <p>Call <a data-link-type="abstract-op" href="https://streams.spec.whatwg.org/#transform-stream-default-controller-enqueue" id="ref-for-transform-stream-default-controller-enqueue">TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>, <var>outputChunk</var>). </p>
         <li>
          <p>Return a new promise resolved with undefined. </p>
        </ol>
       <li>
-       <p>Let <var>result</var> be the result of <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-encoding-process">processing</a> <var>token</var> for <var>dec</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-decoder">decoder</a>, <var>dec</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-stream">stream</a>, <var>output</var>, and <var>dec’s</var> <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-error-mode">error mode</a>. </p>
+       <p>Let <var>result</var> be the result of <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-encoding-process" id="ref-for-concept-encoding-process②">processing</a> <var>token</var> for <var>decForTransform</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-decoder" id="ref-for-textdecoder-decoder④">decoder</a>, <var>decForTransform</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-stream" id="ref-for-textdecoder-stream⑦">stream</a>, <var>output</var>, and <var>decForTransform</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-error-mode" id="ref-for-textdecoder-error-mode⑨">error mode</a>. </p>
       <li>
-       <p>If <var>result</var> is <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#error" id="ref-for-error⑦">error</a>, return a new promise rejected with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror⑥">TypeError</a></code> exception. </p>
+       <p>If <var>result</var> is <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#error" id="ref-for-error⑦">error</a>, then return a new promise rejected with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror④">TypeError</a></code> exception. </p>
      </ol>
    </ol>
-   <p>The <dfn data-dfn-type="dfn" data-noexport="" id="concept-td-flush-and-enqueue">flush and enqueue<a class="self-link" href="#concept-td-flush-and-enqueue"></a></dfn> algorithm, which handles the end
-of data from the input <code class="idl"><a data-link-type="idl" href="https://streams.spec.whatwg.org/#rs-class" id="ref-for-rs-class②">ReadableStream</a></code>, given a <code class="idl"><a data-link-type="idl" href="https://encoding.spec.whatwg.org/#textdecoder" id="ref-for-textdecoder⑥">TextDecoder</a></code> <var>dec</var>, runs these steps: </p>
+   <p>The <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="concept-td-flush-and-enqueue">flush and enqueue</dfn> algorithm, which handles the end
+of data from the input <code class="idl"><a data-link-type="idl" href="https://streams.spec.whatwg.org/#rs-class" id="ref-for-rs-class②">ReadableStream</a></code>, given a <code class="idl"><a data-link-type="idl" href="https://encoding.spec.whatwg.org/#textdecoder" id="ref-for-textdecoder⑦">TextDecoder</a></code> <var>decForTransform</var>, runs
+these steps: </p>
    <ol>
     <li>
-     <p>If the <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-do-not-flush-flag">do not flush flag</a> for <var>dec</var> is unset, set <var>dec’s</var> <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-decoder">decoder</a> to a new <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#decoder">decoder</a> for <var>dec</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-encoding">encoding</a>, set <var>dec</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-stream">stream</a> to a new <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-stream">stream</a>, and unset <var>dec</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-bom-seen-flag">BOM seen flag</a>. </p>
+     <p>Let <var>output</var> be a new <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-stream" id="ref-for-concept-stream①⑧">stream</a>. </p>
     <li>
-     <p>Unset <var>dec</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-do-not-flush-flag">do not flush flag</a>. </p>
+     <p>Let <var>result</var> be the result of <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-encoding-process" id="ref-for-concept-encoding-process③">processing</a> <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#end-of-stream" id="ref-for-end-of-stream⑦">end-of-stream</a> for <var>decForTransform</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-decoder" id="ref-for-textdecoder-decoder⑤">decoder</a> and <var>decForTransform</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-stream" id="ref-for-textdecoder-stream⑧">stream</a>, <var>output</var>, and <var>decForTransform</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-error-mode" id="ref-for-textdecoder-error-mode①⓪">error mode</a>. </p>
     <li>
-     <p>Let <var>output</var> be a new <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-stream">stream</a>. </p>
-    <li>
-     <p>Let <var>result</var> be the result of <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-encoding-process">processing</a> <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#end-of-stream">end-of-stream</a> for <var>dec</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-decoder">decoder</a> and <var>dec</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-stream">stream</a>, <var>output</var>, and <var>dec</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textdecoder-error-mode">error mode</a>. </p>
-    <li>
-     <p>If <var>result</var> is <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#finished">finished</a>, run these steps:</p>
+     <p>If <var>result</var> is <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#finished" id="ref-for-finished②">finished</a>, then run these steps: </p>
      <ol>
       <li>
        <p>Let <var>outputChunk</var> be <var>output</var>, <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-td-serialize" id="ref-for-concept-td-serialize③">serialized</a>. </p>
       <li>
-       <p>Let <var>controller</var> be <var>dec</var>’s <a data-link-type="dfn" href="#textdecoder-transform" id="ref-for-textdecoder-transform⑥">transform</a>.[[transformStreamController]]. </p>
+       <p>Let <var>controller</var> be <var>decForTransform</var>’s <a data-link-type="dfn" href="#textdecoder-transform" id="ref-for-textdecoder-transform⑤">transform</a>.[[transformStreamController]]. </p>
       <li>
        <p>Call <a data-link-type="abstract-op" href="https://streams.spec.whatwg.org/#transform-stream-default-controller-enqueue" id="ref-for-transform-stream-default-controller-enqueue①">TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>, <var>outputChunk</var>). </p>
       <li>
        <p>Return a new promise resolved with undefined. </p>
      </ol>
     <li>
-     <p>Otherwise, return a new promise rejected with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror⑦">TypeError</a></code> exception. </p>
+     <p>Otherwise, return a new promise rejected with a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror⑤">TypeError</a></code> exception. </p>
    </ol>
 
 <h3>In 8.2 Interface <code title="">TextEncoder</code>, add:</h3>
@@ -230,8 +222,8 @@ of data from the input <code class="idl"><a data-link-type="idl" href="https://s
 
 <p class="addition">to the TextEncoder interface.
 
-<p class="addition">In the paragraph following the IDL, insert " and <dfn data-dfn-for="TextEncoder" data-dfn-type="dfn" data-noexport="" id="textencoder-transform">transform<a class="self-link" href="#textencoder-transform"></a></dfn> (a <code class="idl"><a data-link-type="idl" href="https://streams.spec.whatwg.org/#ts-class" id="ref-for-ts-class①">TransformStream</a></code> object) and <dfn data-dfn-for="TextEncoder" data-dfn-type="dfn" data-lt="pending high surrogate" data-noexport="" id="textencoder-pending-high-surrogate">pending high
-surrogate<a class="self-link" href="#textencoder-pending-high-surrogate"></a></dfn> (initially unset)" at the end of the sentence.
+<p class="addition">In the paragraph following the IDL, insert " and <dfn data-dfn-for="TextEncoder" data-dfn-type="dfn" data-noexport="" id="textencoder-transform">transform<a class="self-link" href="#textencoder-transform"></a></dfn> and <dfn data-dfn-for="TextEncoder" data-dfn-type="dfn" data-lt="pending high surrogate" data-noexport="" id="textencoder-pending-high-surrogate">pending high
+surrogate<a class="self-link" href="#textencoder-pending-high-surrogate"></a></dfn> (initially null)" at the end of the sentence.
 
 <p class="addition">To the DOM intro note, add
 
@@ -251,53 +243,45 @@ surrogate<a class="self-link" href="#textencoder-pending-high-surrogate"></a></d
 <p class="addition">To the <dfn class="idl-code" data-dfn-for="TextEncoder" data-dfn-type="constructor" data-export="" id="dom-textencoder"><code>TextEncoder()</code><a class="self-link" href="#dom-textencoder"></a></dfn> constructor steps, before the final step, add:
 
   <ol start="3">
-      <li>
+    <li>
+     <p>Let <var>encForTransform</var> be a new <code class="idl"><a data-link-type="idl" href="https://encoding.spec.whatwg.org/#textencoder" id="ref-for-textencoder⑥">TextEncoder</a></code> object. </p>
+    <li>
+     <p>Set <var>encForTransform</var>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textencoder-encoder" id="ref-for-textencoder-encoder①">encoder</a> to <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8" id="ref-for-utf-8①⑨">UTF-8</a>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#encoder" id="ref-for-encoder①③">encoder</a>. </p>
+     <p class="note" role="note">For simplicity, <var>enc</var> and <var>encForTransform</var> have the same
+  members. However, <a data-link-type="dfn" href="#textencoder-transform" id="ref-for-textencoder-transform">transform</a> is not used by <var>encForTransform</var> and <a data-link-type="dfn" href="#textencoder-pending-high-surrogate" id="ref-for-textencoder-pending-high-surrogate">pending high surrogate</a> is not used by <var>enc</var>. It is not necessary
+  for implementations to store these unused member fields. </p>
+    <li>
      <p>Let <var>startAlgorithm</var> be an algorithm that takes no arguments and returns nothing. </p>
     <li>
      <p>Let <var>transformAlgorithm</var> be an algorithm which takes a <var>chunk</var> argument
- and runs the <a data-link-type="dfn" href="#concept-te-encode-and-enqueue" id="ref-for-concept-te-encode-and-enqueue">encode and enqueue a chunk</a> algorithm with <var>enc</var> and <var>chunk</var>. </p>
+ and runs the <a data-link-type="dfn" href="#concept-te-encode-and-enqueue" id="ref-for-concept-te-encode-and-enqueue">encode and enqueue a chunk</a> algorithm with <var>encForTransform</var> and <var>chunk</var>. </p>
     <li>
-     <p>Let <var>flushAlgorithm</var> be an algorithm which runs the <a data-link-type="dfn" href="#concept-te-encode-and-flush" id="ref-for-concept-te-encode-and-flush">encode and flush</a> algorithm with <var>enc</var>. </p>
+     <p>Let <var>flushAlgorithm</var> be an algorithm which runs the <a data-link-type="dfn" href="#concept-te-encode-and-flush" id="ref-for-concept-te-encode-and-flush">encode and flush</a> algorithm with <var>encForTransform</var>. </p>
     <li>
      <p>Let <var>transform</var> be the result of calling <a data-link-type="abstract-op" href="https://streams.spec.whatwg.org/#create-transform-stream" id="ref-for-create-transform-stream①">CreateTransformStream</a>(<var>startAlgorithm</var>, <var>transformAlgorithm</var>, <var>flushAlgorithm</var>). </p>
     <li>
-     <p>Set <var>enc</var>’s <a data-link-type="dfn" href="#textencoder-transform" id="ref-for-textencoder-transform">transform</a> to <var>transform</var> </p>
+     <p>Set <var>enc</var>’s <a data-link-type="dfn" href="#textencoder-transform" id="ref-for-textencoder-transform①">transform</a> to <var>transform</var>. </p>
 </ol>
 
 <p class="addition">After the description of the encoding attribute, add:
 
    <p>The <dfn class="idl-code" data-dfn-for="TextEncoder" data-dfn-type="attribute" data-export="" id="dom-textencoder-readable"><code>readable</code><a class="self-link" href="#dom-textencoder-readable"></a></dfn> attribute’s getter must return <a data-link-type="dfn" href="#textencoder-transform" id="ref-for-textencoder-transform①">transform</a>.[[readable]]. </p>
    <p>The <dfn class="idl-code" data-dfn-for="TextEncoder" data-dfn-type="attribute" data-export="" id="dom-textencoder-writable"><code>writable</code><a class="self-link" href="#dom-textencoder-writable"></a></dfn> attribute’s getter must return <a data-link-type="dfn" href="#textencoder-transform" id="ref-for-textencoder-transform②">transform</a>.[[writable]]. </p>
-   <p>The <dfn class="idl-code" data-dfn-for="TextEncoder" data-dfn-type="method" data-export="" data-lt="encode(input)|encode()" id="dom-textencoder-encode"><code>encode(<var>input</var>)</code><a class="self-link" href="#dom-textencoder-encode"></a></dfn> method, when invoked,
-must run these steps: </p>
-   <ol>
-    <li>
-     <p>Let <var>readable</var> be <a data-link-type="dfn" href="#textencoder-transform" id="ref-for-textencoder-transform③">transform</a>.[[readable]]. </p>
-    <li>
-     <p>If <a data-link-type="abstract-op" href="https://streams.spec.whatwg.org/#is-readable-stream-locked" id="ref-for-is-readable-stream-locked①">IsReadableStreamLocked</a>(<var>readable</var>) is true, then throw a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror⑧">TypeError</a></code> exception. </p>
-    <li>
-     <p>Let <var>writable</var> be <a data-link-type="dfn" href="#textencoder-transform" id="ref-for-textencoder-transform④">transform</a>.[[writable]]. </p>
-    <li>
-     <p>If <a data-link-type="abstract-op" href="https://streams.spec.whatwg.org/#is-writable-stream-locked" id="ref-for-is-writable-stream-locked①">IsWritableStreamLocked</a>(<var>writable</var>) is true, then throw a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror⑨">TypeError</a></code> exception. </p>
-     <p class="note" role="note">These steps are for consistent behaviour with the <code class="idl"><a data-link-type="idl" href="https://encoding.spec.whatwg.org/#textdecoder" id="ref-for-textdecoder⑦">TextDecoder</a></code> <a class="idl-code" data-link-type="method" href="https://encoding.spec.whatwg.org/#dom-textdecoder-decode" id="ref-for-dom-textdecoder-decode③"><code>decode(<var>input</var>)</code></a> method. </p>
-</ol>
 
 
 <p class="addition">After the definition of the encode() method, add:
 
-   <p>The <dfn data-dfn-type="dfn" data-noexport="" id="concept-te-encode-and-enqueue">encode and enqueue a chunk<a class="self-link" href="#concept-te-encode-and-enqueue"></a></dfn> algorithm, given a <code class="idl"><a data-link-type="idl" href="https://encoding.spec.whatwg.org/#textencoder" id="ref-for-textencoder⑥">TextEncoder</a></code> <var>enc</var> and <var>chunk</var>, runs these steps: </p>
+   <p>The <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="concept-te-encode-and-enqueue">encode and enqueue a chunk</dfn> algorithm, given a <code class="idl"><a data-link-type="idl" href="https://encoding.spec.whatwg.org/#textencoder" id="ref-for-textencoder⑦">TextEncoder</a></code> <var>encForTransform</var> and <var>chunk</var>, runs these steps: </p>
    <ol>
     <li>
-     <p>Let <var>input</var> be the result of <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-convert-ecmascript-to-idl-value" id="ref-for-dfn-convert-ecmascript-to-idl-value">converting</a> <var>chunk</var> to a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString③">DOMString</a></code>. If this throws an exception, return a promise rejected with
- that exception. </p>
+     <p>Let <var>input</var> be the result of <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-convert-ecmascript-to-idl-value" id="ref-for-dfn-convert-ecmascript-to-idl-value">converting</a> <var>chunk</var> to a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-DOMString" id="ref-for-idl-DOMString③">DOMString</a></code>. If this throws an exception, then return a promise rejected
+ with that exception. </p>
     <li>
-     <p>Convert <var>input</var> to a <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-stream" id="ref-for-concept-stream②②">stream</a>. </p>
+     <p>Convert <var>input</var> to a <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-stream" id="ref-for-concept-stream②①">stream</a>. </p>
     <li>
-     <p>Let <var>output</var> be a new <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-stream" id="ref-for-concept-stream②③">stream</a>. </p>
+     <p>Let <var>output</var> be a new <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-stream" id="ref-for-concept-stream②②">stream</a>. </p>
     <li>
-     <p>Let <var>encoder</var> be <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8" id="ref-for-utf-8②⓪">UTF-8</a>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#encoder" id="ref-for-encoder①③">encoder</a>. </p>
-    <li>
-     <p>Let <var>controller</var> be <var>enc</var>’s <a data-link-type="dfn" href="#textencoder-transform" id="ref-for-textencoder-transform⑤">transform</a>.[[transformStreamController]]. </p>
+     <p>Let <var>controller</var> be <var>encForTransform</var>’s <a data-link-type="dfn" href="#textencoder-transform" id="ref-for-textencoder-transform④">transform</a>.[[transformStreamController]]. </p>
     <li>
      <p>While true, run these steps: </p>
      <ol>
@@ -309,68 +293,65 @@ must run these steps: </p>
         <li>
          <p>Convert <var>output</var> into a byte sequence. </p>
         <li>
-         <p>Call <a data-link-type="abstract-op" href="https://streams.spec.whatwg.org/#transform-stream-default-controller-enqueue" id="ref-for-transform-stream-default-controller-enqueue②">TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>, <var>output</var>). </p>
+         <p>Let <var>chunk</var> be a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-Uint8Array" id="ref-for-idl-Uint8Array④">Uint8Array</a></code> object wrapping an <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-ArrayBuffer" id="ref-for-idl-ArrayBuffer③">ArrayBuffer</a></code> containing <var>output</var>. </p>
+        <li>
+         <p>Call <a data-link-type="abstract-op" href="https://streams.spec.whatwg.org/#transform-stream-default-controller-enqueue" id="ref-for-transform-stream-default-controller-enqueue②">TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>, <var>chunk</var>). </p>
         <li>
          <p>Return a new promise resolved with undefined. </p>
        </ol>
       <li>
-       <p>Let <var>result</var> be the result of executing the <a data-link-type="dfn" href="#concept-te-convert-code-unit-to-scalar-value" id="ref-for-concept-te-convert-code-unit-to-scalar-value">convert code unit to scalar value</a> algorithm with <var>enc</var>, <var>token</var> and <var>input</var>. </p>
+       <p>Let <var>result</var> be the result of executing the <a data-link-type="dfn" href="#concept-te-convert-code-unit-to-scalar-value" id="ref-for-concept-te-convert-code-unit-to-scalar-value">convert code unit to scalar
+   value</a> algorithm with <var>encForTransform</var>, <var>token</var> and <var>input</var>. </p>
       <li>
-       <p>If <var>result</var> is not <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#continue" id="ref-for-continue③">continue</a>, <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-encoding-process" id="ref-for-concept-encoding-process⑤">process</a> <var>result</var> for <var>encoder</var>, <var>input</var>, <var>output</var>. </p>
+       <p>If <var>result</var> is not <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#continue" id="ref-for-continue③">continue</a>, then <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-encoding-process" id="ref-for-concept-encoding-process⑤">process</a> <var>result</var> for <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#textencoder-encoder" id="ref-for-textencoder-encoder③">encoder</a>, <var>input</var>, <var>output</var>. </p>
      </ol>
    </ol>
-   <p>The <dfn data-dfn-type="dfn" data-noexport="" id="concept-te-convert-code-unit-to-scalar-value">convert code unit to scalar value<a class="self-link" href="#concept-te-convert-code-unit-to-scalar-value"></a></dfn> algorithm, given a <code class="idl"><a data-link-type="idl" href="https://encoding.spec.whatwg.org/#textencoder" id="ref-for-textencoder⑦">TextEncoder</a></code> <var>enc</var>, <var>token</var> and <var>input</var> stream,
-runs these steps: </p>
+   <p>The <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="concept-te-convert-code-unit-to-scalar-value">convert code unit to scalar value</dfn> algorithm, given a <code class="idl"><a data-link-type="idl" href="https://encoding.spec.whatwg.org/#textencoder" id="ref-for-textencoder⑧">TextEncoder</a></code> <var>encForTransform</var>, <var>token</var> and <var>input</var> stream, runs these steps: </p>
    <ol>
     <li>
-     <p>If <var>enc</var>’s <a data-link-type="dfn" href="#textencoder-pending-high-surrogate" id="ref-for-textencoder-pending-high-surrogate">pending high surrogate</a> is set, run these steps: </p>
+     <p>If <var>encForTransform</var>’s <a data-link-type="dfn" href="#textencoder-pending-high-surrogate" id="ref-for-textencoder-pending-high-surrogate①">pending high surrogate</a> is non-null, then run these
+  steps: </p>
      <ol>
       <li>
-       <p>Let <var>high surrogate</var> be <var>enc</var>’s <a data-link-type="dfn" href="#textencoder-pending-high-surrogate" id="ref-for-textencoder-pending-high-surrogate①">pending high surrogate</a>. </p>
+       <p>Let <var>high surrogate</var> be <var>encForTransform</var>’s <a data-link-type="dfn" href="#textencoder-pending-high-surrogate" id="ref-for-textencoder-pending-high-surrogate②">pending high
+   surrogate</a>. </p>
       <li>
-       <p>Unset <var>enc</var>’s <a data-link-type="dfn" href="#textencoder-pending-high-surrogate" id="ref-for-textencoder-pending-high-surrogate②">pending high surrogate</a>. </p>
+       <p>Set <var>encForTransform</var>’s <a data-link-type="dfn" href="#textencoder-pending-high-surrogate" id="ref-for-textencoder-pending-high-surrogate③">pending high surrogate</a> to null. </p>
       <li>
-       <p>If <var>token</var> is in the range U+DC00 to U+DFFF, inclusive, return a code point whose
-  value is 0x10000 + ((<var>high surrogate</var> − 0xD800) &lt;&lt; 10) + (<var>token</var> − 0xDC00). </p>
+       <p>If <var>token</var> is in the range U+DC00 to U+DFFF, inclusive, then return a code point
+   whose value is 0x10000 + ((<var>high surrogate</var> − 0xD800) &lt;&lt; 10) +
+   (<var>token</var> − 0xDC00). </p>
       <li>
        <p><a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-stream-prepend" id="ref-for-concept-stream-prepend④">Prepend</a> <var>token</var> to <var>input</var>. </p>
       <li>
        <p>Return U+FFFD. </p>
      </ol>
     <li>
-     <p>If <var>token</var> is in the range U+D800 to U+DBFF, inclusive, set <a data-link-type="dfn" href="#textencoder-pending-high-surrogate" id="ref-for-textencoder-pending-high-surrogate③">pending high
+     <p>If <var>token</var> is in the range U+D800 to U+DBFF, inclusive, then set <a data-link-type="dfn" href="#textencoder-pending-high-surrogate" id="ref-for-textencoder-pending-high-surrogate④">pending high
  surrogate</a> to <var>token</var> and return <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#continue" id="ref-for-continue④">continue</a>. </p>
     <li>
-     <p>If <var>token</var> is in the range U+DC00 to U+DFFF, inclusive, return U+FFFD. </p>
+     <p>If <var>token</var> is in the range U+DC00 to U+DFFF, inclusive, then return U+FFFD. </p>
     <li>
      <p>Return <var>token</var>. </p>
    </ol>
-   <p class="note" role="note">This is equivalent to the <a data-link-type="dfn" href="https://www.w3.org/TR/WebIDL/#dfn-obtain-unicode" id="ref-for-dfn-obtain-unicode">convert a DOMString to a sequence of Unicode
-scalar values</a> algorithm from <a data-link-type="biblio" href="https://encoding.spec.whatwg.org/#biblio-webidl">[WEBIDL]</a>, but allows for surrogate pairs that are split between
-strings. </p>
-   <p>The <dfn data-dfn-type="dfn" data-noexport="" id="concept-te-encode-and-flush">encode and flush<a class="self-link" href="#concept-te-encode-and-flush"></a></dfn> algorithm, given a <code class="idl"><a data-link-type="idl" href="https://encoding.spec.whatwg.org/#textencoder" id="ref-for-textencoder⑧">TextEncoder</a></code> <var>enc</var>, runs these steps: </p>
+   <p class="note" role="note">This is equivalent to the "<a data-link-type="dfn" href="https://infra.spec.whatwg.org/#javascript-string-convert" id="ref-for-javascript-string-convert">convert</a> a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#javascript-string" id="ref-for-javascript-string">JavaScript string</a> into a <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#scalar-value-string" id="ref-for-scalar-value-string">scalar
+value string</a>" algorithm from the Infra Standard, but allows for surrogate pairs that are split
+between strings. </p>
+   <p>The <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="concept-te-encode-and-flush">encode and flush</dfn> algorithm, given a <code class="idl"><a data-link-type="idl" href="https://encoding.spec.whatwg.org/#textencoder" id="ref-for-textencoder⑨">TextEncoder</a></code> <var>encForTransform</var>, runs these steps: </p>
    <ol>
     <li>
-     <p>If <var>enc</var>’s <a data-link-type="dfn" href="#textencoder-pending-high-surrogate" id="ref-for-textencoder-pending-high-surrogate④">pending high surrogate</a> is set, run these steps: </p>
+     <p>If <var>encForTransform</var>’s <a data-link-type="dfn" href="#textencoder-pending-high-surrogate" id="ref-for-textencoder-pending-high-surrogate⑤">pending high surrogate</a> is non-null, then run these
+  steps: </p>
      <ol>
       <li>
-       <p>Unset <var>enc</var>’s <a data-link-type="dfn" href="#textencoder-pending-high-surrogate" id="ref-for-textencoder-pending-high-surrogate⑤">pending high surrogate</a> </p>
+       <p>Let <var>controller</var> be <var>encForTransform</var>’s <a data-link-type="dfn" href="#textencoder-transform" id="ref-for-textencoder-transform⑤">transform</a>.[[transformStreamController]]. </p>
       <li>
-       <p>Let <var>input</var> be a new <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-stream" id="ref-for-concept-stream②④">stream</a>. </p>
+       <p>Let <var>output</var> be the byte sequence 0xEF 0xBF 0xBD. </p>
+       <p class="note" role="note">This is the replacement character U+FFFD encoded as UTF-8. </p>
       <li>
-       <p>Let <var>output</var> be a new <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-stream" id="ref-for-concept-stream②⑤">stream</a>. </p>
+       <p>Let <var>chunk</var> be a <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-Uint8Array" id="ref-for-idl-Uint8Array⑤">Uint8Array</a></code> object wrapping an <code class="idl"><a data-link-type="idl" href="https://heycam.github.io/webidl/#idl-ArrayBuffer" id="ref-for-idl-ArrayBuffer④">ArrayBuffer</a></code> containing <var>output</var>. </p>
       <li>
-       <p>Let <var>encoder</var> be <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#utf-8" id="ref-for-utf-8②①">UTF-8</a>’s <a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#encoder" id="ref-for-encoder①④">encoder</a>. </p>
-      <li>
-       <p>Let <var>controller</var> be <var>enc</var>’s <a data-link-type="dfn" href="#textencoder-transform" id="ref-for-textencoder-transform⑥">transform</a>.[[transformStreamController]]. </p>
-      <li>
-       <p>Let <var>token</var> be U+FFFD. </p>
-      <li>
-       <p><a data-link-type="dfn" href="https://encoding.spec.whatwg.org/#concept-encoding-process" id="ref-for-concept-encoding-process⑥">Process</a> <var>token</var> for <var>encoder</var>, <var>input</var>, <var>output</var>. </p>
-      <li>
-       <p>Convert <var>output</var> into a byte sequence. </p>
-      <li>
-       <p>Call <a data-link-type="abstract-op" href="https://streams.spec.whatwg.org/#transform-stream-default-controller-enqueue" id="ref-for-transform-stream-default-controller-enqueue③">TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>, <var>output</var>). </p>
+       <p>Call <a data-link-type="abstract-op" href="https://streams.spec.whatwg.org/#transform-stream-default-controller-enqueue" id="ref-for-transform-stream-default-controller-enqueue③">TransformStreamDefaultControllerEnqueue</a>(<var>controller</var>, <var>chunk</var>). </p>
      </ol>
     <li>
      <p>Return a new promise resolved with undefined. </p>
