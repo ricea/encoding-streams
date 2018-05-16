@@ -66,7 +66,7 @@ fetch('/dest', { method: 'POST', body, headers: {'Content-Type': 'text/plain; ch
 ### Scenario 2
 
 Streaming new text into a page is a popular use-case for streams. Here is one approach which
-creates a new span for each chunk and appends it an element.
+creates a new span for each chunk and appends it to an element.
 
 ```javascript
 async function appendURLToElement(url, element) {
@@ -84,7 +84,7 @@ async function appendURLToElement(url, element) {
 ```
 
 There are a number of different approaches possible: see https://streams.spec.whatwg.org/demos/ for
-examples of streaming structured data or html into a page.
+examples of streaming structured data or HTML into a page.
 
 ## Detailed design discussion
 
