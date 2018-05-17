@@ -1,5 +1,5 @@
 # Encoding Streams Explained
-14 May 2018
+18 May 2018
 
 ## What’s all this then?
 
