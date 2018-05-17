@@ -205,5 +205,6 @@ async function fetchAsTextStream(url, encoding) {
 
 ## References & acknowledgements
 
-Many thanks to Anne van Kesteren, Domenic Denicola, Henri Sivonen, Jake Archibald, Joshua Bell,
-Takeshi Yoshino, and Yutaka Hirano for input, design advice and support.
+Many thanks to Anne van Kesteren, Domenic Denicola, Gary Kacmarcik, Henri Sivonen, Jake Archibald,
+Joshua Bell, Mathias Bynens, Takeshi Yoshino, and Yutaka Hirano for input, design advice and
+support.
