@@ -90,12 +90,15 @@ examples of streaming structured data or HTML into a page.
 
 ### Handling of split surrogate pairs
 
-The existing TextEncoder `encode()` method does not have support for split surrogate pairs. However,
-when splitting text into chunks using `substring()` it is easy for split surrogate pairs to
-occur. It would lead to data corruption issues that would be hard to track down. For this reason,
-TextEncoderStream will reassemble surrogate pairs that are split between chunks. Other unmatched
-surrogates will still be replaced with unicode replacement characters so that the output is always
-valid UTF-8.
+The existing TextEncoder `encode()` method does not reassemble split surrogate pairs. However, when
+splitting text into chunks using `substring()` it is easy for split surrogate pairs to occur. This
+can lead to data corruption issues that are hard to track down. For this reason, TextEncoderStream
+will reassemble surrogate pairs that are split between chunks. Other unmatched surrogates will still
+be replaced with unicode replacement characters so that the output is always valid UTF-8.
+
+To state it another way, concatenating the chunks before transformation is guaranteed to give the
+same result as concatenating the chunks after transformation, regardless of the position of the
+chunk boundaries.
 
 ## Considered alternatives
 * A static method called `TextDecoder.stream()` could have been used. However, returning a plain
