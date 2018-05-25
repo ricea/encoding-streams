@@ -3,14 +3,17 @@
 
 ## What’s all this then?
 
-**TextDecoderStream** is used to convert a stream of text in a binary encoding to a
-[stream](https://streams.spec.whatwg.org/) of strings.
+[WHATWG Streams](https://streams.spec.whatwg.org/) are APIs for creating, composing, and consuming
+streams of data, including text and binary streams. The [Encoding
+Standard](https://encoding.spec.whatwg.org/) provides APIs for converting between text and
+binary. Adding Streams support to the Encoding Standard will make conversion of text streams easy.
+
+**TextDecoderStream** is used to convert a stream of text in a binary encoding to a of strings.
 
 **TextEncoderStream** is used to convert a stream of strings into bytes in the UTF-8 encoding.
 
-Both APIs satisfy the concept of a
-[transform stream](https://streams.spec.whatwg.org/#ts-model). They are the streaming equivalents of
-TextDecoder and TextEncoder.
+Both APIs satisfy the concept of a [transform stream](https://streams.spec.whatwg.org/#ts-model)
+from the WHATWG Streams Standard. They are the streaming equivalents of TextDecoder and TextEncoder.
 
 ### Goals
 
@@ -33,7 +36,7 @@ offloading also become possible.
   background](https://encoding.spec.whatwg.org/#security-background). For input, every
   encoding in the [Encoding Standard](https://encoding.spec.whatwg.org/#names-and-labels)
   is supported.
-* Unification of WHATWG Streams with the concept of a
+* Unification of the WHATWG Streams discussed here with the concept of a
   [stream](https://encoding.spec.whatwg.org/#concept-stream) used in the Encoding Standard. Despite
   having the same name, they are different in functionality and purpose. Since the Encoding
   Standard's "stream" concept is just an internal piece of spec terminology, this has no impact on
